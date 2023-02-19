@@ -1,4 +1,4 @@
-# JS SMALL PROJECTS
+## JS SIMPLE PROJECTS
 
 Some small JavaScript projects to perfect my front-end skills, achieve my coding
 goals faster, and find project ideas for my portfolio
