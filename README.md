@@ -1,7 +1,7 @@
-## JS SIMPLE PROJECTS
+### JS SIMPLE PROJECTS
 
-Some small JavaScript projects to perfect my front-end skills, achieve my coding
-goals faster, and find project ideas for my portfolio
+Some simple JavaScript projects to perfect my front-end skills, achieve my
+coding goals faster, and find project ideas for my portfolio
 
 ## Parcel template
 
