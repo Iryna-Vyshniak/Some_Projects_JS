@@ -42,7 +42,7 @@
 }
 
 
-.sl-wrapper .sl-image .sl-caption {
+.sl-wrapper .sl-image div.sl-caption {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -56,12 +56,13 @@
     text-align: center;
 }
 
-.sl-wrapper .sl-close {
+.sl-wrapper button.sl-close {
     color: #ffffff;
     text-shadow: 1px 1px 1px #3e3e3e;
 }
 
-.sl-wrapper .sl-navigation button {
+.sl-wrapper .sl-navigation button .sl-prev,
+.sl-wrapper .sl-navigation button .sl-next {
     color: #ffffff;
     text-shadow: 1px 1px 2px #3e3e3e;
 }
