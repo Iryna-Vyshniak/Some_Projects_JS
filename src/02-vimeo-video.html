@@ -5,22 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Video playback</title>
+    <link rel="stylesheet" href="./sass/index.scss" />
   </head>
   <body>
-    <ul>
-      <li class="main-item">
-        <a class="main-link" href="./index.html">Home</a>
-      </li>
-    </ul>
-    <iframe
-      id="vimeo-player"
-      src="https://player.vimeo.com/video/236203659"
-      width="640"
-      height="360"
-      frameborder="0"
-      allowfullscreen
-      allow="autoplay; encrypted-media"
-    ></iframe>
+    <section>
+      <ul>
+        <li class="main-item">
+          <a class="main-link" href="./index.html">Home</a>
+        </li>
+      </ul>
+      <div class="video-wrapper">
+        <h1></h1>
+        <iframe
+          id="vimeo-player"
+          src="https://player.vimeo.com/video/236203659"
+          width="640"
+          height="360"
+          frameborder="0"
+          allowfullscreen
+          allow="autoplay; encrypted-media"
+        ></iframe>
+      </div>
+    </section>
+
     <script src="./app/02-vimeo-video.js" type="module"></script>
   </body>
 </html>
