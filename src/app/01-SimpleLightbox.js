@@ -21,7 +21,7 @@ function renderMarkup(items) {
 }
 
 const lightbox = new SimpleLightbox('.gallery a', {
-  closeText: 'ⓧ',
+  closeText: 'x',
   captionsData: 'alt',
   captionDelay: 250,
   scrollZoom: false,

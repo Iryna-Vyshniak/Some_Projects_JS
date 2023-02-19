@@ -1,37 +1,37 @@
 export const galleryItems = [
   {
     preview:
-      'https://pixabay.com/get/g5937ab40bc507a27c6fefee70ba4ad7da2707f8cf7696350135d6530acdacb4a994958e3d22f307b26f963f1ec2f11d7_640.jpg',
+      'https://pixabay.com/get/g11c6cf9a32f103b54a32fb7d98cf2335db5e435cbc83458160e78a467cd8a9625cf27892552ca70723e7283d3ddc935e4241b47762b5abefd6bc8099665216704659a7081030fca6c833924433df20eb_640.jpg',
     original:
-      'https://pixabay.com/get/gdaa67b5f256bab190e1276e43121360eccee32003a8c64a18dc05b041c49d8e4bcf0cffb1b099cb488668ae6f36909df6622272423666bf1a2a4a3f4740c8a93_1920.jpg',
+      'https://pixabay.com/get/g93b6839613949a05730f57566a0302ba088c93e544ce56852148a7494198d45b5d24131e094d2f63b2711c5b01081026f7b48af9786848d44cd3f465124309c7c56d1634cae2019c9012ec623695917e_1920.jpg',
     description: 'Moss Spore Capsules',
   },
   {
     preview:
-      'https://pixabay.com/get/g14fe86aaa31fdc1450b2329479cd455517149b456adc71df7a42734709a5863ba4df58b482e90936fb0919328ccfaaf1_640.jpg',
+      'https://pixabay.com/get/g2fa63a401371c020a020b9243c4cd391257ccc2ab96bc03e518cf6f442abaa5cbd099ad90917caabe2216efb4fcb3eea634b29494cddc16b57930a18d2843a1944ba19c2a319370b663a14f1ac5f096b_640.jpg',
     original:
-      'https://pixabay.com/get/g3e74e580cd7a91706e4f7153407b6e75d0012aa85c49f1f92087236ac546eba75b282a8002f42d4a81236496f6c9d8b148574a267a1d7ea381ee0c643da4d1e1_1920.jpg',
+      'https://pixabay.com/get/g9283f8ee24b5727465782f4908a70eb9a948897939030892af011c85667ed4eb5099865984ede4473d56f704cd39137753da779197552ebceff1cdff8e929fb6b382e7806a21a84cfae4b351db0543ea_1280.jpg',
     description: 'Green Hills',
   },
   {
     preview:
-      'https://pixabay.com/get/gce047e52d283915ed6c615d2ae40554a6dfa9b71766ded2c8a05b4607737b98efb42118a88a4b086acf798396b8b3801_640.jpg',
+      'https://pixabay.com/get/ga73269ea9fe9402b16aca18979eba494069aa13a7b8df8307e28f41c2460fcc5c0740dc602fb9e450f4c02be9d0d8bc3_640.jpg',
     original:
-      'https://pixabay.com/get/g6cb0c581f763d953cb38914873640e11b7391e0c244cede046cfd84ca0dee0d45177b4d2e95ebea147b396c7ec214ab83a9590a3de3fe93c2d3d92fa38b5b587_1920.jpg',
+      'https://pixabay.com/get/g4c19c58099a120d3b432feb0e3e161193d126368eb8cd311755e1d5599ce5dc3c26f97a18c9e36ad5ed0cd8e50666348d056eb8b17b9559058a03eabcdc3be24_1920.jpg',
     description: 'Alberta Canada Lake',
   },
   {
     preview:
-      'https://pixabay.com/get/gbb161e7a5e56c5c379d00f7344be08af4eb4b5056cb68cf801eda965add49e6ac052e360e1133a275ce318291b7d749f_640.jpg',
+      'https://pixabay.com/get/g418c603473c1575405886ba1b966073c606e0ab56dbe2ff4fc986ee914070aecb7381649f1e12d2e4e7ce1d3b9275f48_640.jpg',
     original:
-      'https://pixabay.com/get/g227d713b312731e3cadd87e4bfe6c486ace158c7a28d41e294c58cf41f1681068b797bc5f28f5cbb110bae1cfb8286fec19a62e9d7c9d5193be8f47947dd630b_1920.jpgtps://cdn.pixabay.com/photo/2016/11/18/16/19/flowers-1835619_1280.jpg',
+      'https://pixabay.com/get/g841ee95a9761a2861c4f3ece26e7e4a75fa08f3fb80aa8fbcb0a36cd60f8ac71a2bd2a2212f4f66206b7b254b66868ce267b6c25eb26bccf3c5c72cd62eb6226_1920.jpg',
     description: 'Japanese Quince Early Bloomer',
   },
   {
     preview:
-      'https://pixabay.com/get/ga85aa3f411d2027bfedc2a9cf83fa35de68731e02268f0530e342b4eaa3fa55864642f077d4bddb99315574c881c77ac_640.jpg',
+      'https://pixabay.com/get/gfe326a7615bc26f5b570882f0366f688b8e314f8802de855a9ea483ef5ac41ddccb99b91a27ddad3aa4ebbee48a7308c_640.jpg',
     original:
-      'https://pixabay.com/get/ge3a505647aced2e1f5f729eb9cc421b767c64505f801b1ab8f1c21fd1361e8fea35fb94586fea437b215951a3f3de743_1280.jpg',
+      'https://pixabay.com/get/g834daa31d93e457affd4a884cf91edb2307a2f1a174085d847d31738a6c57cb944eab8d998413d1bcb4a7ddf161aa8ed.jpg',
     description: 'Autumn River',
   },
   {
@@ -46,7 +46,7 @@ export const galleryItems = [
       'https://pixabay.com/get/gbf6ff34d127b477e6bff470f755318bc8a84bae3883fa8007ba28dd12e64c530510c131beaa80045893885396f6dc69c_640.jpg',
     original:
       'https://pixabay.com/get/g0081bb6582997b75fde585234689a51cd2ecf315ef82be4cbd6252eb0d0931263629487113e85e014c9e56080c109f3a3e250985766e390dbe850be5d5ac0acf_1920.jpg',
-    description: 'Forest Sunset',
+    description: '',
   },
   {
     preview:
@@ -61,5 +61,26 @@ export const galleryItems = [
     original:
       'https://cdn.pixabay.com/photo/2019/05/17/04/35/lighthouse-4208843_1280.jpg',
     description: 'Lighthouse Coast Sea',
+  },
+  {
+    preview:
+      'https://pixabay.com/get/gb0ea0cb569627592ba0e43c47c56a3d3e9ac00a16ee3aac5f1daaea29ea573009d4b85a5aec675194315da3a4e5b62fb_640.jpg',
+    original:
+      'https://pixabay.com/get/g188c6adb2349853bffe0339d4b1f4dc24ef9d5299e76a6d09bca97274df4a6fab3154cb25bb829825301197cda870d00dfc093b57a118e1ecc2be0972c802b7c_1920.jpg',
+    description: 'The Mountain in the Desert',
+  },
+  {
+    preview:
+      'https://pixabay.com/get/g309a8efd186d8ea015c291e467d4151b898016e6691f4e1ba5c45279253a38652a19b586541d9484f5bfde20ad34053b_640.jpg',
+    original:
+      'https://pixabay.com/get/g95f6dc17c22bff656ed3da352bf6b2f1c031c92d01ff37dc4125d1923276beba45ef178ad56c96aadeedca47c1f6a36ea445ad92ebd837e7f1db28ad36889c5c_1920.jpg',
+    description: 'The Road Trip',
+  },
+  {
+    preview:
+      'https://pixabay.com/get/g4c8a7b0949073db42511a150a2670570f3bf025e8003c46b3054b4dcb35fc278b13990473fcf503eacbe79859fa6ed43_640.jpg',
+    original:
+      'https://pixabay.com/get/g68b73fe4fa850356f83d13604cafc7902ae6e5a2d5b4758845230952ce83d3cec5efda8296eaf634a209cc5b018cd4857f69a1b394c650f3332e78c383d54b71_1920.jpg',
+    description: 'San Blas Islands',
   },
 ];
