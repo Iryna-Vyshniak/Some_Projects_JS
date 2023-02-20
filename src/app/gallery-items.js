@@ -50,16 +50,16 @@ export const galleryItems = [
   },
   {
     preview:
-      'https://cdn.pixabay.com/photo/2019/05/16/21/10/landscape-4208255__340.jpg',
+      'https://ik.imagekit.io/irinavn2011/hd-wallpaper-1745186_1920.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1676897347773',
     original:
-      'https://cdn.pixabay.com/photo/2019/05/16/21/10/landscape-4208255_1280.jpg',
+      'https://ik.imagekit.io/irinavn2011/hd-wallpaper-1745186_1920.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1676897347773',
     description: 'Nature Landscape',
   },
   {
     preview:
-      'https://cdn.pixabay.com/photo/2019/05/17/04/35/lighthouse-4208843__340.jpg',
+      'https://ik.imagekit.io/irinavn2011/lighthouse-5439227_1920.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1676897276727',
     original:
-      'https://cdn.pixabay.com/photo/2019/05/17/04/35/lighthouse-4208843_1280.jpg',
+      'https://ik.imagekit.io/irinavn2011/lighthouse-5439227_1920.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1676897276727',
     description: 'Lighthouse Coast Sea',
   },
   {
