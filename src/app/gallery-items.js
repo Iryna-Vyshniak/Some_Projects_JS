@@ -36,17 +36,17 @@ export const galleryItems = [
   },
   {
     preview:
-      'https://pixabay.com/get/ge87b7a4082ce2563b307425fa29130292618c5785fecda0745e06b4bea9144c40abefc3d977eaf1dc5007dd6e6dc07f2_640.jpg',
+      'https://pixabay.com/get/gfc03f60fbb1552c52f9de38a97f77f4979432d5aec1a42094daf598e2bfc794b5860b48fd7d2e43747e1f1f67edf655a_640.jpg',
     original:
-      'https://pixabay.com/get/gd9ca1f2b8d5464bb37ff05ed01582c7b1ae968c226654f3f7e0c9b1df081332d751e798dd62b56f261342da57dca993a3c825177bc06cc6c3b5a6ba63dbff867_1280.jpg',
-    description: 'Flowers Plants',
+      'https://pixabay.com/get/gbbdd5943ba5d5852f6cd1e18151c267a5204af92f65e02309989e6597ed32ea2c13ea1073053a321bb7d97d87fb21ae15417ec675554c1993a7d59363b455b38_1920.jpg',
+    description: 'Rainforest',
   },
   {
     preview:
-      'https://pixabay.com/get/gbf6ff34d127b477e6bff470f755318bc8a84bae3883fa8007ba28dd12e64c530510c131beaa80045893885396f6dc69c_640.jpg',
+      'https://pixabay.com/get/gb5e7222efad2912fc7810dae14bd62c0eb4a126196f236868b04751ee9dba26b9816f0668f04557d0810c19b75eb1091_640.jpg',
     original:
-      'https://pixabay.com/get/g0081bb6582997b75fde585234689a51cd2ecf315ef82be4cbd6252eb0d0931263629487113e85e014c9e56080c109f3a3e250985766e390dbe850be5d5ac0acf_1920.jpg',
-    description: '',
+      'https://pixabay.com/get/g6f70eb1335756fc83733fc6ba3873161e20d583ba2a8c804c5c94867784b1a9128589bece4c93f8f8669ec5dcb17a1b0_1920.jpg',
+    description: 'Sunset',
   },
   {
     preview:
