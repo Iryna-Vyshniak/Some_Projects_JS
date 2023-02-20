@@ -1,0 +1,131 @@
+button.modal-form.active {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+}
+
+button.modal-form {
+    display: none;
+}
+
+.feedback-form {
+    display: flex;
+    flex-direction: column;
+
+    padding: 12px;
+    max-width: 480px;
+    margin: 0 auto;
+
+    border-radius: 4px;
+    box-shadow: -1px -1px 1px #fff, 1px 1px 1px #babecc;
+    background-color: transparent;
+}
+
+.modal__close-btn,
+button.modal-form,
+.feedback-form button,
+.feedback-form input,
+.feedback-form textarea {
+    border: 0;
+    outline: 0;
+
+    border-radius: 320px;
+    padding: 16px;
+    background-color: #e6eaff;
+    text-shadow: 1px 1px 0 #fff;
+
+    font-size: 16px;
+    font: inherit;
+}
+
+.modal__close-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 8px;
+    cursor: pointer;
+
+    width: 2.125rem;
+    height: 2.125rem;
+    border-radius: 3.125rem;
+    background-color: transparent;
+    color: #9e0202;
+    text-shadow: 1px 1px 1px #fff;
+    transition: all 250ms ease-in-out;
+
+    box-shadow: -1px -1px 1px white, 1px 1px 1px rgba(0, 0, 0, 0.2);
+
+    &:hover,
+    &:focus {
+        box-shadow: inset -1px -1px 1px white, inset 1px 1px 1px rgba(0, 0, 0, 0.2);
+        transform: scale(0.8);
+    }
+
+    &:active {
+        box-shadow: inset -1px -1px 3px white,
+            inset 1px 1px 1px rgba(0, 0, 0, 0.2);
+    }
+
+}
+
+
+.feedback-form label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+    width: 100%;
+
+    color: #9e0202;
+    text-shadow: 1px 1px 1px #fff;
+}
+
+.feedback-form input,
+.feedback-form textarea {
+    margin-right: 8px;
+    box-shadow: inset 1px 1px 3px #babecc, inset -1px -1px 5px #fff;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+}
+
+.feedback-form input:focus,
+.feedback-form textarea:focus {
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #fff;
+}
+
+.feedback-form textarea {
+    border-radius: 10px;
+}
+
+button.modal-form,
+.feedback-form button {
+    padding: 8px 12px;
+    color: #9e0202;
+    font-weight: bold;
+    box-shadow: -1px -1px 1px #fff, 1px 1px 1px #babecc;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    font-weight: 600;
+    font: inherit;
+}
+
+button.modal-form:hover,
+.feedback-form button:hover {
+    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+}
+
+button.modal-form:active,
+.feedback-form button:active {
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #fff;
+}
+
+.feedback-form textarea {
+    resize: none;
+}
