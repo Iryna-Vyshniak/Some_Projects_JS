@@ -18,8 +18,8 @@ ul {
     list-style: none;
 }
 
-li.main-item {
-    margin-bottom: 20px;
+li.main-item:not(:last-child) {
+    margin-bottom: 30px;
 }
 
 .main-link {
