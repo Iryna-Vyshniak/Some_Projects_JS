@@ -1,3 +1,7 @@
+div.basicLightbox {
+    background: rgba(0, 0, 0, .1);
+}
+
 button.modal-form.active {
     position: absolute;
     top: 30%;
@@ -20,10 +24,10 @@ button.modal-form {
 
     border-radius: 4px;
     box-shadow: -1px -1px 1px #fff, 1px 1px 1px #babecc;
-    background-color: transparent;
+    background-color: #d8e0ff;
 }
 
-.modal__close-btn,
+.feedback-modal__close-btn,
 button.modal-form,
 .feedback-form button,
 .feedback-form input,
@@ -40,10 +44,10 @@ button.modal-form,
     font: inherit;
 }
 
-.modal__close-btn {
+.feedback-modal__close-btn {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 5px;
+    right: 15px;
     z-index: 10;
     display: flex;
     justify-content: center;
@@ -52,8 +56,8 @@ button.modal-form,
     padding: 8px;
     cursor: pointer;
 
-    width: 2.125rem;
-    height: 2.125rem;
+    width: 1.925rem;
+    height: 1.925rem;
     border-radius: 3.125rem;
     background-color: transparent;
     color: #9e0202;
@@ -75,6 +79,10 @@ button.modal-form,
 
 }
 
+.feedback-modal {
+
+    width: 500px;
+}
 
 .feedback-form label {
     display: flex;
@@ -84,6 +92,7 @@ button.modal-form,
 
     color: #9e0202;
     text-shadow: 1px 1px 1px #fff;
+    margin-bottom: 1.25rem;
 }
 
 .feedback-form input,
@@ -128,4 +137,16 @@ button.modal-form:active,
 
 .feedback-form textarea {
     resize: none;
+}
+
+// .feedback-form__email {
+//     border: 2px solid #bdbdbd;
+// }
+
+input.feedback-form__email.valid {
+    border: 0.5px solid #d8e0ff;
+}
+
+input.feedback-form__email.invalid {
+    border: 0.5px solid #f44336;
 }
