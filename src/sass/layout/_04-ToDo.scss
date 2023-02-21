@@ -1,0 +1,116 @@
+.todo-wrapper {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.form-todo,
+.todo-list {
+    display: flex;
+    padding: 12px;
+    max-width: 100%;
+    width: 480px;
+    margin: 0 auto;
+
+    border-radius: 4px;
+}
+
+.form-todo {
+    justify-content: space-between;
+    box-shadow: -1px -1px 1px #fff, 1px 1px 1px #babecc;
+    background-color: #d8e0ff;
+}
+
+// .form-todo__input {}
+
+// .form-todo__btn {}
+
+
+.js-form-todo__input {
+    height: 30.8px;
+}
+
+
+.todo-list {
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+
+
+.todo-list__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 10px;
+    padding: 10px 5px;
+    border-bottom: 1px dotted #c3cffe;
+}
+
+
+
+.todo-list__input {
+    width: 15px;
+    height: 15px;
+    border-radius: .5rem;
+}
+
+.form-todo__input,
+.todo-list__input,
+.form-todo__btn,
+.todo-list__btn {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #9e0202;
+    text-shadow: .0625rem .0625rem .0625rem #fff;
+    transition: all 250ms ease-in-out;
+}
+
+.todo-list__input,
+.form-todo__btn,
+.todo-list__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: .5rem;
+    cursor: pointer;
+
+    width: 30.8px;
+    height: 30.8px;
+    border-radius: 50px;
+
+    box-shadow: -0.0625rem -0.0625rem .0625rem white, .0625rem .0625rem .0625rem rgba(0, 0, 0, 0.2);
+
+    &:hover,
+    &:focus {
+        box-shadow: inset -0.0625rem -0.0625rem .0625rem white, inset .0625rem .0625rem .0625rem rgba(0, 0, 0, 0.2);
+        transform: scale(0.8);
+    }
+
+    &:active {
+        box-shadow: inset -0.0625rem -0.0625rem .1875rem white,
+            inset .0625rem .0625rem .0625rem rgba(0, 0, 0, 0.2);
+    }
+
+}
+
+.form-todo__btn {
+    border-radius: .5rem;
+}
+
+
+.todo-list__input {
+    width: 20px;
+    height: 20px;
+    border-radius: .5rem;
+}
+
+// .fa-sharp {}
+
+// .fa-solid {}
+
+// .fa-trash {}
