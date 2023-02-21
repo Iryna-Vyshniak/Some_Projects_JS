@@ -1,5 +1,6 @@
-@import './modern-normalize';
-@import './common';
+@import './utils/modern-normalize';
+@import './utils/vars';
+@import './utils/common';
 @import './layout/01-SimpleLightbox';
 @import './layout/02-vimeo-video';
 @import './layout/03-feedback';
