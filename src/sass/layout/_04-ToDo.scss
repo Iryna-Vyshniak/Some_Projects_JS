@@ -82,6 +82,7 @@
     // height: calc($index * 1.2);
     border-radius: 50px;
 
+
     box-shadow: -0.0625rem -0.0625rem .0625rem white, .0625rem .0625rem .0625rem rgba(0, 0, 0, 0.2);
 
     &:hover,
@@ -116,4 +117,13 @@
     // height: calc($index * .6);
     border-radius: .5rem;
     padding: 8px;
+}
+
+.todo-list__input + span {
+    font-style: italic;
+}
+
+.btn-wrapper {
+    display: flex;
+    column-gap: 10px;
 }
