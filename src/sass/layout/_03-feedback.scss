@@ -39,8 +39,6 @@ button.modal-form,
     padding: 16px;
     background-color: #e6eaff;
     text-shadow: 1px 1px 0 #fff;
-
-    font-size: 16px;
     font: inherit;
 }
 
@@ -56,8 +54,9 @@ button.modal-form,
     padding: 8px;
     cursor: pointer;
 
-    width: 1.925rem;
-    height: 1.925rem;
+    width: 1.225rem;
+    height: 1.225rem;
+
     border-radius: 3.125rem;
     background-color: transparent;
     color: #9e0202;
@@ -75,6 +74,11 @@ button.modal-form,
     &:active {
         box-shadow: inset -1px -1px 3px white,
             inset 1px 1px 1px rgba(0, 0, 0, 0.2);
+    }
+
+    @include mobile {
+        width: 1.525rem;
+        height: 1.525rem;
     }
 
 }

@@ -5,7 +5,7 @@
     transform: translate(-50%, -50%);
     margin: 0 auto;
     max-width: 100%;
-    width: calc($index * 25);
+    width: 500px;
     padding: 8px;
     box-shadow: -3px -3px 20px #fff, 5px 5px 20px #919dcc;
 }
@@ -26,7 +26,7 @@
 
 .form-todo__input {
     width: 90%;
-    height: calc($index * 1.3);
+    // height: calc($index * 1.3);
     border-radius: .5rem;
     padding: 8px;
     box-shadow: -3px -3px 20px #fff, 5px 5px 20px #919dcc;
@@ -78,8 +78,8 @@
     padding: .5rem;
     cursor: pointer;
 
-    width: calc($index * 1.2);
-    height: calc($index * 1.2);
+    // width: calc($index * 1.2);
+    // height: calc($index * 1.2);
     border-radius: 50px;
 
     box-shadow: -0.0625rem -0.0625rem .0625rem white, .0625rem .0625rem .0625rem rgba(0, 0, 0, 0.2);
@@ -112,8 +112,8 @@
 
 
 .todo-list__input {
-    width: calc($index * .6);
-    height: calc($index * .6);
+    // width: calc($index * .6);
+    // height: calc($index * .6);
     border-radius: .5rem;
     padding: 8px;
 }

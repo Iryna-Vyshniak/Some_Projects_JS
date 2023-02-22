@@ -5,8 +5,12 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background-color: #d8e0ff;
     color: #212121;
-    font-size: calc($index * .5); // responsive fz
+    font-size: calc($index * .8); // responsive fz
     line-height: 1.5;
+
+    @include mobile {
+        font-size: 1rem;
+    }
 }
 
 img {
