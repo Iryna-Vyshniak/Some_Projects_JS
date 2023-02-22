@@ -3,58 +3,57 @@
     top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
-
+    margin: 0 auto;
+    max-width: 100%;
+    width: calc($index * 25);
+    padding: 8px;
+    box-shadow: -3px -3px 20px #fff, 5px 5px 20px #919dcc;
 }
 
 .form-todo,
 .todo-list {
     display: flex;
-    padding: 12px;
-    max-width: 100%;
-    width: 480px;
     margin: 0 auto;
-
     border-radius: 4px;
 }
 
 .form-todo {
+    align-items: center;
     justify-content: space-between;
-    box-shadow: -1px -1px 1px #fff, 1px 1px 1px #babecc;
-    background-color: #d8e0ff;
+    column-gap: 10px;
+    padding: 8px 12px;
 }
 
-// .form-todo__input {}
+.form-todo__input {
+    width: 90%;
+    height: calc($index * 1.3);
+    border-radius: .5rem;
+    padding: 8px;
+    box-shadow: -3px -3px 20px #fff, 5px 5px 20px #919dcc;
 
-// .form-todo__btn {}
+    &:hover {
+        box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+    }
 
-
-.js-form-todo__input {
-    height: 30.8px;
+    &:active {
+        box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #fff;
+    }
 }
 
 
 .todo-list {
     flex-direction: column;
     row-gap: 30px;
+    padding: 4px;
 }
-
-
 
 .todo-list__item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     column-gap: 10px;
-    padding: 10px 5px;
+    padding: 8px;
     border-bottom: 1px dotted #c3cffe;
-}
-
-
-
-.todo-list__input {
-    width: 15px;
-    height: 15px;
-    border-radius: .5rem;
 }
 
 .form-todo__input,
@@ -79,8 +78,8 @@
     padding: .5rem;
     cursor: pointer;
 
-    width: 30.8px;
-    height: 30.8px;
+    width: calc($index * 1.2);
+    height: calc($index * 1.2);
     border-radius: 50px;
 
     box-shadow: -0.0625rem -0.0625rem .0625rem white, .0625rem .0625rem .0625rem rgba(0, 0, 0, 0.2);
@@ -100,17 +99,21 @@
 
 .form-todo__btn {
     border-radius: .5rem;
+    box-shadow: -3px -3px 20px #fff, 3px 3px 20px #919dcc;
+
+    &:hover {
+        box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+    }
+
+    &:active {
+        box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #fff;
+    }
 }
 
 
 .todo-list__input {
-    width: 20px;
-    height: 20px;
+    width: calc($index * .6);
+    height: calc($index * .6);
     border-radius: .5rem;
+    padding: 8px;
 }
-
-// .fa-sharp {}
-
-// .fa-solid {}
-
-// .fa-trash {}
