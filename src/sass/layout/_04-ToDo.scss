@@ -127,3 +127,56 @@
     display: flex;
     column-gap: 10px;
 }
+
+div.basicLightbox {
+    background: rgba(24, 10, 65, 0.5);
+}
+
+
+.modal {
+    display: flex;
+    flex-direction: column;
+
+    padding: 12px;
+    max-width: 480px;
+    margin: 0 auto;
+
+    border-radius: 4px;
+    box-shadow: -1px -1px 2px #fff, 1px 1px 2px #919dcc;
+    background-color: #d8e0ff;
+    color: #61677c;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.todo-modal__close-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: .5rem;
+    cursor: pointer;
+
+    width: calc($index * 1.2);
+    height: calc($index * 1.2);
+
+    max-width: 100px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #9e0202;
+    text-shadow: .0625rem .0625rem .0625rem #fff;
+    transition: all 250ms ease-in-out;
+
+    border-radius: .5rem;
+    box-shadow: -3px -3px 20px #fff, 3px 3px 20px #919dcc;
+
+    &:hover {
+        box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+    }
+
+    &:active {
+        box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #fff;
+    }
+
+
+}
