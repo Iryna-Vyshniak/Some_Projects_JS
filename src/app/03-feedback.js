@@ -55,6 +55,7 @@ function createModalInstance() {
   // save field values ​​to local storage when the user types something in the fields of form
   const form = document.querySelector('.feedback-form');
   const inputEmail = form.querySelector('.js-feedback-form__email');
+  const textarea = form.querySelector('.feedback-form  textarea');
   const content = form.querySelector('.js-feedback-form__email + span');
   const btnSubmit = form.querySelector('[type="submit"]');
 
@@ -65,14 +66,23 @@ function createModalInstance() {
 
   function onFormSubmit(e) {
     e.preventDefault();
+
+    if (localStorage.getItem(LOCAL_KEY)) {
+      localStorage.removeItem(LOCAL_KEY);
+    }
+    const { email, message } = e.currentTarget.elements;
+    console.log({ email: email.value, message: message.value });
+
     e.currentTarget.reset();
-    localStorage.removeItem(LOCAL_KEY);
   }
 
   function onInputData(e) {
     let data = localStorage.getItem(LOCAL_KEY);
     data = data ? JSON.parse(data) : {};
-    data[e.target.name] = e.target.value.trim();
+    data = {
+      email: inputEmail.value.trim(),
+      message: textarea.value.trim(),
+    };
     localStorage.setItem(LOCAL_KEY, JSON.stringify(data));
   }
 
@@ -80,9 +90,8 @@ function createModalInstance() {
     let data = localStorage.getItem(LOCAL_KEY);
     if (data) {
       data = JSON.parse(data);
-      console.log(data);
       Object.entries(data).forEach(([name, value]) => {
-        form.elements[name].value = value || '';
+        form.elements[name].value = value ?? '';
       });
     }
   }
