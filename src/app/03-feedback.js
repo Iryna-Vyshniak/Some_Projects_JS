@@ -1,6 +1,8 @@
 import * as basicLightbox from 'basiclightbox';
 import '../../node_modules/basiclightbox/dist/basicLightbox.min.css';
+
 import throttle from 'lodash.throttle';
+import { markupForm } from './components';
 
 const LOCAL_KEY = 'feedback-form-state';
 const btnOpenModal = document.querySelector('.js-modal-form');
@@ -17,25 +19,6 @@ function openModal(e) {
   createModalInstance(e);
 }
 
-const markupForm = ` <div class="feedback-modal">
-     <button
-      class="feedback-modal__close-btn js-modal__close-btn"
-      aria-label="close modal window"
-    >&#10005;
-    </button>
-            <form class="feedback-form" autocomplete="off">
-              <label>
-                Email
-                <input class="feedback-form__email js-feedback-form__email" type="email" name="email" autofocus>
-                <span></span>
-              </label>
-              <label>
-                Message
-                <textarea name="message" rows="8"></textarea>
-              </label>
-              <button type="submit" disabled>Submit</button>
-            </form></div>`;
-
 function createModalInstance() {
   const instance = basicLightbox.create(markupForm, {
     onShow: instance => {
@@ -50,6 +33,7 @@ function createModalInstance() {
       }, 500);
     },
   });
+
   instance.show();
 
   // save field values ​​to local storage when the user types something in the fields of form
