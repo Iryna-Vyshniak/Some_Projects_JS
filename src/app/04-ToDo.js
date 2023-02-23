@@ -67,12 +67,15 @@ function saveTodos() {
 
 // create markup
 function getToDo({ id, value, checked }) {
+  const checkedText = checked
+    ? 'style="text-decoration: line-through; text-decoration-color: #9e0202; text-decoration-style: dotted; text-decoration-thickness: 1px;"'
+    : '';
   return /*html*/ `
 <li data-id="${id}" class="todo-list__item">
       <input data-action="check" type="checkbox" name="checkbox" class="todo-list__input" ${
         checked ? 'checked' : ''
       }/>
-      <span>${value}</span>
+      <span ${checkedText}>${value}</span>
       <div class="btn-wrapper">
           <button data-action="delete" class="todo-list__btn js-todo-list__btn">
             <i data-action="delete" class="fa-sharp fa-solid fa-trash"></i>
@@ -160,6 +163,9 @@ function onToDoClick(e) {
 
   switch (action) {
     case 'check':
+      // const listItem = list.querySelector(`li[data-id="${id}"]`);
+      // const text = listItem.querySelector('span');
+      // text.style.textDecoration = 'line-through';
       toggleCheckbox(id);
       break;
 
