@@ -3,56 +3,41 @@ import toastr from 'toastr';
 import '../../node_modules/toastr/toastr.scss';
 import { modalToDo, onEscKeyPress } from './components';
 
-toastr.options = {
-  closeButton: true,
-  debug: false,
-  newestOnTop: false,
-  progressBar: true,
-  positionClass: 'toast-top-right',
-  preventDuplicates: false,
-  onclick: null,
-  showDuration: '300',
-  hideDuration: '1000',
-  timeOut: '5000',
-  extendedTimeOut: '1000',
-  showEasing: 'swing',
-  hideEasing: 'linear',
-  showMethod: 'fadeIn',
-  hideMethod: 'fadeOut',
-};
+const STORAGE_KEY = 'todos';
 
+// greeting
+const today = new Date();
+const dayHour = today.getHours();
+let greeting;
+
+if (dayHour >= 11 && dayHour <= 17) {
+  greeting = 'Good day! \n Welcome!';
+} else if (dayHour >= 5 && dayHour <= 11) {
+  greeting = 'Good morning! \n Welcome!';
+} else if (dayHour >= 18 && dayHour <= 23) {
+  greeting = 'Good evening! \n Welcome!';
+} else {
+  greeting = 'Hello! \n Welcome!';
+}
+
+const greetingBlock = document.querySelector('.greeting');
+greetingBlock.innerHTML = greeting;
+
+// todo
 const form = document.querySelector('.js-form-todo');
 const list = document.querySelector('.js-todo-list');
+
 const modalButton = modalToDo
   .element()
   .querySelector('.js-todo-modal__close-btn');
 
-let todos = [
-  // {
-  //   id: '1',
-  //   text: 'buy bread',
-  //   checked: false,
-  //   created: '2023-02-23',
-  // },
-  // {
-  //   id: '2',
-  //   text: 'buy milk for coffee',
-  //   checked: true,
-  //   created: '2023-02-22',
-  // },
-  // {
-  //   id: '3',
-  //   text: 'top up phone',
-  //   checked: true,
-  //   created: '2023-02-21',
-  // },
-];
+let todos = [];
 
 // populate todo list when reloading
 const loadTodos = () => {
   try {
     toastr.success('Todos loaded successfully');
-    todos = JSON.parse(localStorage.getItem('todos')) || [];
+    todos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
     // throw new Error('lorem ipsum');
   } catch (error) {
@@ -61,19 +46,34 @@ const loadTodos = () => {
   }
 };
 
-// update todos
-const updateTodo = newToDo => {
-  localStorage.setItem('todos', JSON.stringify(newToDo));
-};
-
 // save todos to locale storage
-const saveTodos = newToDo => {
-  localStorage.setItem('todos', JSON.stringify(newToDo));
+const saveTodos = () => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
 };
 
-// delete todos from locale storage
-const deleteTodo = newToDo => {
-  localStorage.setItem('todos', JSON.stringify(newToDo));
+// create markup
+const getToDo = ({ id, value, checked }) => /*html*/ `
+<li data-id="${id}" class="todo-list__item">
+      <input data-action="check" type="checkbox" name="checkbox" class="todo-list__input" ${
+        checked ? 'checked' : ''
+      }/>
+      <span>${value}</span>
+      <div class="btn-wrapper">
+          <button data-action="delete" class="todo-list__btn paused">
+            <i data-action="delete" class="fa-sharp fa-solid fa-trash paused"></i>
+          </button>
+          <audio data-action="delete" src="../audio/delete.mp3" class="js-audio-delete"></audio>
+          <button data-action="view" class="todo-list__btn">
+           <i data-action="view" class="fa fa-sticky-note" aria-hidden="true"></i>
+          </button>
+      </div>
+    </li>`;
+
+const render = () => {
+  // const listItem = todos.map(todo => getToDo(todo)).join('');
+  const listItem = todos.map(getToDo).join('');
+  list.innerHTML = '';
+  list.insertAdjacentHTML('beforeend', listItem);
 };
 
 // submit
@@ -89,42 +89,34 @@ const onFormSubmit = e => {
     created: new Date(),
   };
 
-  saveTodos(todos);
   todos.push(newToDo);
-  render();
   e.currentTarget.reset();
-  //toastr.success('Todo created successfully');
+  addBtn.classList.toggle('paused');
+  audioAdd.paused ? audioAdd.play() : audioAdd.pause();
+  saveTodos();
+  render();
 };
 
-// create markup
-const getToDo = ({ id, value, checked }) => `
-<li data-id="${id}" class="todo-list__item">
-      <input data-action="check" type="checkbox" name="checkbox" class="todo-list__input" ${
-        checked ? 'checked' : ''
-      }/>
-      <span>${value}</span>
-      <div class="btn-wrapper">
-          <button data-action="delete" class="todo-list__btn">
-            <i data-action="delete" class="fa-sharp fa-solid fa-trash"></i>
-          </button>
-          <button data-action="view" class="todo-list__btn">
-           <i data-action="view" class="fa fa-sticky-note" aria-hidden="true"></i>
-          </button>
-      </div>
-    </li>`;
+// check
+const toggleCheckbox = id => {
+  todos = todos.map(todo => {
+    return todo.id === id
+      ? {
+          ...todo,
+          checked: !todo.checked,
+        }
+      : todo;
+  });
 
-const render = () => {
-  // const listItem = todos.map(todo => getToDo(todo)).join('');
-  const listItem = todos.map(getToDo).join('');
-  list.innerHTML = '';
-  list.insertAdjacentHTML('beforeend', listItem);
+  saveTodos();
+  render();
 };
 
 // delete
 const deleteToDoItem = id => {
   todos = todos.filter(todo => todo.id !== id);
 
-  deleteTodo(todos);
+  saveTodos();
   render();
   toastr.success('Todo deleted successfully');
 };
@@ -142,20 +134,6 @@ const viewToDo = id => {
   modalToDo.show();
 };
 
-// check
-const toggleCheckbox = id => {
-  todos = todos.map(item => {
-    return item.id === id
-      ? {
-          ...item,
-          checked: !item.checked,
-        }
-      : item;
-  });
-
-  updateTodo(todos);
-};
-
 // click on todo item
 const onToDoClick = e => {
   if (e.target === e.currentTarget) return;
@@ -166,6 +144,10 @@ const onToDoClick = e => {
 
   switch (action) {
     case 'delete':
+      console.log(deleteBtn);
+      console.log(audioDelete);
+      deleteBtn.classList.toggle('paused');
+      audioDelete.paused ? audioDelete.play() : audioDelete.pause();
       deleteToDoItem(id);
       break;
 
@@ -179,11 +161,29 @@ const onToDoClick = e => {
   }
 };
 
+//audio
+// function onAudioPlay(e) {
+//   console.log(e.target.dataset.action);
+//   // if (e.target.dataset.action === 'delete') {
+//   //   deleteBtn.classList.toggle('paused');
+//   //   audioDelete.paused ? audioDelete.play() : audioDelete.pause();
+//   // }
+// }
+
 // run
 loadTodos();
 render();
+
+const addBtn = form.querySelector('button[data-action="add"]');
+const deleteBtn = list.querySelector('button[data-action="delete"]');
+console.log(deleteBtn);
+const audioDelete = list.querySelector('.js-audio-delete');
+const audioAdd = form.querySelector('.js-audio-add');
+const btns = list.querySelector('.btn-wrapper');
+console.log(btns);
 
 // add event listeners
 form.addEventListener('submit', onFormSubmit);
 list.addEventListener('click', onToDoClick);
 modalButton.addEventListener('click', modalToDo.close);
+//btns.addEventListener('click', onAudioPlay);
