@@ -138,7 +138,8 @@ div.basicLightbox {
     flex-direction: column;
 
     padding: 12px;
-    max-width: 480px;
+    max-width: 100%;
+    width: 500px;
     margin: 0 auto;
 
     border-radius: 4px;
@@ -177,6 +178,45 @@ div.basicLightbox {
     &:active {
         box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #fff;
     }
-
-
 }
+
+// toastr
+
+#toast-container > .toast-success {
+    text-shadow: 1px 1px 0 #61677c;
+    background-color: rgba(24, 10, 65, 0.5);
+}
+
+#toast-container > .toast-error {
+    color: #fff;
+    text-shadow: 1px 1px 0 #61677c;
+    background-color: #ea031a;
+}
+
+// .success {
+//     color: #61677c;
+//     text-shadow: 1px 1px 0 #fff;
+//     background-color: #d8ffe1;
+// }
+
+// .success:hover {
+//     background-color: #c4ffd2;
+// }
+
+// .success:active {
+//     background-color: #b3fec5;
+// }
+
+// .danger {
+//     color: #fff;
+//     text-shadow: 1px 1px 0 #61677c;
+//     background-color: #ea031a;
+// }
+
+// .danger:hover {
+//     background-color: #f50018;
+// }
+
+// .danger:active {
+//     background-color: #f90019;
+// }
