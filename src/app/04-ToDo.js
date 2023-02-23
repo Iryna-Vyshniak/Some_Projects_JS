@@ -4,6 +4,24 @@ import '../../node_modules/toastr/toastr.scss';
 import { modalToDo, onEscKeyPress } from './components';
 
 const STORAGE_KEY = 'todos';
+let todos = [];
+
+const form = document.querySelector('.js-form-todo');
+const list = document.querySelector('.js-todo-list');
+const addBtn = form.querySelector('button[data-action="add"]');
+const audioAdd = form.querySelector('.js-audio-add');
+//const audioDelete = document.querySelector('.js-audio-delete'); - null поки не зарендериться хоча б одна тудушка, потрібно оновлювати сторінку
+
+// const btns = list.querySelector('.btn-wrapper'); -для делегації подій для кнопок
+
+const modalButton = modalToDo
+  .element()
+  .querySelector('.js-todo-modal__close-btn');
+
+// add event listeners
+form.addEventListener('submit', onFormSubmit);
+list.addEventListener('click', onToDoClick);
+modalButton.addEventListener('click', modalToDo.close);
 
 // greeting
 const today = new Date();
@@ -24,17 +42,13 @@ const greetingBlock = document.querySelector('.greeting');
 greetingBlock.innerHTML = greeting;
 
 // todo
-const form = document.querySelector('.js-form-todo');
-const list = document.querySelector('.js-todo-list');
 
-const modalButton = modalToDo
-  .element()
-  .querySelector('.js-todo-modal__close-btn');
-
-let todos = [];
+// run
+loadTodos();
+render();
 
 // populate todo list when reloading
-const loadTodos = () => {
+function loadTodos() {
   try {
     toastr.success('Todos loaded successfully');
     todos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -44,40 +58,43 @@ const loadTodos = () => {
     toastr.error("can't load todos");
     todos = [];
   }
-};
+}
 
 // save todos to locale storage
-const saveTodos = () => {
+function saveTodos() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
-};
+}
 
 // create markup
-const getToDo = ({ id, value, checked }) => /*html*/ `
+function getToDo({ id, value, checked }) {
+  return /*html*/ `
 <li data-id="${id}" class="todo-list__item">
       <input data-action="check" type="checkbox" name="checkbox" class="todo-list__input" ${
         checked ? 'checked' : ''
       }/>
       <span>${value}</span>
       <div class="btn-wrapper">
-          <button data-action="delete" class="todo-list__btn paused">
-            <i data-action="delete" class="fa-sharp fa-solid fa-trash paused"></i>
+          <button data-action="delete" class="todo-list__btn js-todo-list__btn">
+            <i data-action="delete" class="fa-sharp fa-solid fa-trash"></i>
           </button>
-          <audio data-action="delete" src="../audio/delete.mp3" class="js-audio-delete"></audio>
+          <audio data-action="delete" src="/audio/delete.mp3" class="js-audio-delete"></audio>
           <button data-action="view" class="todo-list__btn">
            <i data-action="view" class="fa fa-sticky-note" aria-hidden="true"></i>
           </button>
       </div>
     </li>`;
+}
 
-const render = () => {
+// render markup
+function render() {
   // const listItem = todos.map(todo => getToDo(todo)).join('');
   const listItem = todos.map(getToDo).join('');
   list.innerHTML = '';
   list.insertAdjacentHTML('beforeend', listItem);
-};
+}
 
 // submit
-const onFormSubmit = e => {
+function onFormSubmit(e) {
   e.preventDefault();
 
   const input = e.currentTarget.elements.text;
@@ -95,10 +112,10 @@ const onFormSubmit = e => {
   audioAdd.paused ? audioAdd.play() : audioAdd.pause();
   saveTodos();
   render();
-};
+}
 
 // check
-const toggleCheckbox = id => {
+function toggleCheckbox(id) {
   todos = todos.map(todo => {
     return todo.id === id
       ? {
@@ -110,19 +127,19 @@ const toggleCheckbox = id => {
 
   saveTodos();
   render();
-};
+}
 
 // delete
-const deleteToDoItem = id => {
+function deleteToDoItem(id) {
   todos = todos.filter(todo => todo.id !== id);
 
   saveTodos();
   render();
   toastr.success('Todo deleted successfully');
-};
+}
 
 //view
-const viewToDo = id => {
+function viewToDo(id) {
   const { created } = todos.find(todo => todo.id === id);
   const { value } = todos.find(todo => todo.id === id);
 
@@ -132,58 +149,50 @@ const viewToDo = id => {
   text.textContent = created;
   title.textContent = value;
   modalToDo.show();
-};
+}
 
 // click on todo item
-const onToDoClick = e => {
+function onToDoClick(e) {
   if (e.target === e.currentTarget) return;
   const { action } = e.target.dataset;
   const parent = e.target.closest('li');
-
   const { id } = parent?.dataset || {};
 
   switch (action) {
+    case 'check':
+      toggleCheckbox(id);
+      break;
+
     case 'delete':
-      console.log(deleteBtn);
-      console.log(audioDelete);
-      deleteBtn.classList.toggle('paused');
-      audioDelete.paused ? audioDelete.play() : audioDelete.pause();
+      // оголошуємо змінну audioDelete (вже зарендерена розмітка), щоб звернутися до аудіо-елементу:
+      const audioDelete = document.querySelector('.js-audio-delete');
+      audioDelete.src = '../audio/delete.mp3';
+      audioDelete.play(); //  відтворення звуку на кнопку delete
+      //Uncaught (in promise) DOMException: The play() request was interrupted because the media was removed from the document
+      // Uncaught (in promise) DOMException: запит play() було перервано, оскільки носій видалено з документа.
+      // не встигає відтворитися, перед видаленням??????
       deleteToDoItem(id);
       break;
 
     case 'view':
       viewToDo(id);
       break;
-
-    case 'check':
-      toggleCheckbox(id);
-      break;
   }
-};
+}
 
-//audio
-// function onAudioPlay(e) {
-//   console.log(e.target.dataset.action);
-//   // if (e.target.dataset.action === 'delete') {
-//   //   deleteBtn.classList.toggle('paused');
-//   //   audioDelete.paused ? audioDelete.play() : audioDelete.pause();
-//   // }
-// }
+// також не працює
 
-// run
-loadTodos();
-render();
+// // вибираємо усі елементи кнопки delete
+// const deleteBtns = document.querySelectorAll('button[data-action="delete"]');
+// console.log(deleteBtns);
 
-const addBtn = form.querySelector('button[data-action="add"]');
-const deleteBtn = list.querySelector('button[data-action="delete"]');
-console.log(deleteBtn);
-const audioDelete = list.querySelector('.js-audio-delete');
-const audioAdd = form.querySelector('.js-audio-add');
-const btns = list.querySelector('.btn-wrapper');
-console.log(btns);
-
-// add event listeners
-form.addEventListener('submit', onFormSubmit);
-list.addEventListener('click', onToDoClick);
-modalButton.addEventListener('click', modalToDo.close);
-//btns.addEventListener('click', onAudioPlay);
+// // додаємо подію "click" до кожної кнопки delete
+// deleteBtns.forEach(btn => {
+//   btn.addEventListener('click', () => {
+//     console.log('click audio');
+//     // відтворюємо аудіофайл
+//     const audioDelete = document.querySelector('.js-audio-delete');
+//     audioDelete.src = './audio/delete.mp3';
+//     audioDelete.play();
+//   });
+// });
