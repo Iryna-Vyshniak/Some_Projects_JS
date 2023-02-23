@@ -1,58 +1,105 @@
 import { v4 as uuidv4 } from 'uuid';
-uuidv4();
-import { modalToDo } from './components';
+import toastr from 'toastr';
+import '../../node_modules/toastr/toastr.scss';
+import { modalToDo, onEscKeyPress } from './components';
+
+toastr.options = {
+  closeButton: true,
+  debug: false,
+  newestOnTop: false,
+  progressBar: true,
+  positionClass: 'toast-top-right',
+  preventDuplicates: false,
+  onclick: null,
+  showDuration: '300',
+  hideDuration: '1000',
+  timeOut: '5000',
+  extendedTimeOut: '1000',
+  showEasing: 'swing',
+  hideEasing: 'linear',
+  showMethod: 'fadeIn',
+  hideMethod: 'fadeOut',
+};
 
 const form = document.querySelector('.js-form-todo');
 const list = document.querySelector('.js-todo-list');
-// arr where add all that add when click btn - 2 об'єкти, так як лінтер зробить з одного рядок - важко читати
-// value: 'must to do 1', checked: true - значення одного елемента
+const modalButton = modalToDo
+  .element()
+  .querySelector('.js-todo-modal__close-btn');
 
-//example
-// let todos = [
-//   { id: 1, value: 'must to do 1', checked: true },
-//   { id: 2, value: 'must to do 2', checked: false },
-// ];
-let todos = [];
+let todos = [
+  // {
+  //   id: '1',
+  //   text: 'buy bread',
+  //   checked: false,
+  //   created: '2023-02-23',
+  // },
+  // {
+  //   id: '2',
+  //   text: 'buy milk for coffee',
+  //   checked: true,
+  //   created: '2023-02-22',
+  // },
+  // {
+  //   id: '3',
+  //   text: 'top up phone',
+  //   checked: true,
+  //   created: '2023-02-21',
+  // },
+];
 
+// populate todo list when reloading
 const loadTodos = () => {
   try {
+    toastr.success('Todos loaded successfully');
     todos = JSON.parse(localStorage.getItem('todos')) || [];
 
     // throw new Error('lorem ipsum');
   } catch (error) {
-    console.log('error happened:', error.message);
+    toastr.error("can't load todos");
     todos = [];
   }
 };
 
-const saveTodos = () => {
-  localStorage.setItem('todos', JSON.stringify(todos));
+// update todos
+const updateTodo = newToDo => {
+  localStorage.setItem('todos', JSON.stringify(newToDo));
 };
 
+// save todos to locale storage
+const saveTodos = newToDo => {
+  localStorage.setItem('todos', JSON.stringify(newToDo));
+};
+
+// delete todos from locale storage
+const deleteTodo = newToDo => {
+  localStorage.setItem('todos', JSON.stringify(newToDo));
+};
+
+// submit
 const onFormSubmit = e => {
   e.preventDefault();
-  //   console.log(e.currentTarget.elements);
-  //   console.log(e.currentTarget.elements.text.value);
-  //   const value = e.currentTarget.elements.text.value;
-  //   const { value } = e.currentTarget.text;
+
   const input = e.currentTarget.elements.text;
   const { value } = input;
-  //   create new element
-  //const newToDo = { value: value, checked: false };
-  const newToDo = { id: uuidv4(), value, checked: false };
-  console.log(newToDo); //{value: 'read', checked: false}
-  //   add to arr todos
-  todos.push(newToDo);
-  input.value = '';
+  const newToDo = {
+    id: uuidv4(),
+    value,
+    checked: false,
+    created: new Date(),
+  };
 
-  saveTodos();
+  saveTodos(todos);
+  todos.push(newToDo);
   render();
+  e.currentTarget.reset();
+  //toastr.success('Todo created successfully');
 };
 
-// створюємо шаблонізатор
+// create markup
 const getToDo = ({ id, value, checked }) => `
 <li data-id="${id}" class="todo-list__item">
-      <input type="checkbox" name="checkbox" class="todo-list__input" ${
+      <input data-action="check" type="checkbox" name="checkbox" class="todo-list__input" ${
         checked ? 'checked' : ''
       }/>
       <span>${value}</span>
@@ -67,27 +114,35 @@ const getToDo = ({ id, value, checked }) => `
     </li>`;
 
 const render = () => {
-  const listItem = todos.map(todo => getToDo(todo)).join('');
+  // const listItem = todos.map(todo => getToDo(todo)).join('');
+  const listItem = todos.map(getToDo).join('');
   list.innerHTML = '';
   list.insertAdjacentHTML('beforeend', listItem);
 };
 
-const deleteToDo = id => {
+// delete
+const deleteToDoItem = id => {
   todos = todos.filter(todo => todo.id !== id);
-  console.log('delete');
 
-  saveTodos();
+  deleteTodo(todos);
   render();
+  toastr.success('Todo deleted successfully');
 };
+
+//view
 const viewToDo = id => {
+  const { created } = todos.find(todo => todo.id === id);
+  const { value } = todos.find(todo => todo.id === id);
+
   const text = modalToDo.element().querySelector('.text');
   const title = modalToDo.element().querySelector('h4');
 
-  text.textContent = id;
-  title.textContent = document.querySelector('input + span').textContent;
+  text.textContent = created;
+  title.textContent = value;
   modalToDo.show();
 };
 
+// check
 const toggleCheckbox = id => {
   todos = todos.map(item => {
     return item.id === id
@@ -98,24 +153,20 @@ const toggleCheckbox = id => {
       : item;
   });
 
-  saveTodos();
-  render();
+  updateTodo(todos);
 };
 
+// click on todo item
 const onToDoClick = e => {
-  //   console.log(e.target.dataset); //  {action: 'view'}
-  // console.log(e.target.dataset.action); // action: 'view'
+  if (e.target === e.currentTarget) return;
   const { action } = e.target.dataset;
   const parent = e.target.closest('li');
-  // console.log(parent);
-  //   const id = parent.dataset.id;
-  //   const { id } = parent?.dataset ?? {};
+
   const { id } = parent?.dataset || {};
-  //console.log(id); // 1
 
   switch (action) {
     case 'delete':
-      deleteToDo(id);
+      deleteToDoItem(id);
       break;
 
     case 'view':
@@ -126,11 +177,13 @@ const onToDoClick = e => {
       toggleCheckbox(id);
       break;
   }
-
-  //   if (!e.target.classList.contains('')) return;
 };
 
+// run
 loadTodos();
 render();
+
+// add event listeners
 form.addEventListener('submit', onFormSubmit);
 list.addEventListener('click', onToDoClick);
+modalButton.addEventListener('click', modalToDo.close);
