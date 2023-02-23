@@ -9,6 +9,7 @@
   </head>
   <body class="todo">
     <p><a class="main-link" href="./index.html">Home</a></p>
+    <h1 class="greeting"></h1>
     <div class="todo-wrapper">
       <!-- form ToDo -->
       <form action="#" class="form-todo js-form-todo">
@@ -18,7 +19,10 @@
           class="form-todo__input js-form-todo__input"
           placeholder="Enter what do you want to do..."
         />
-        <button type="submit" class="form-todo__btn">ADD</button>
+        <button data-action="add" type="submit" class="form-todo__btn paused">
+          ADD
+        </button>
+        <audio src="./audio/add.mp3" class="js-audio-add"></audio>
       </form>
       <!-- ToDo list -->
       <ul class="todo-list js-todo-list"></ul>
