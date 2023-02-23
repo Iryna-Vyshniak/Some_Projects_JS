@@ -1,13 +1,29 @@
 import * as basicLightbox from 'basiclightbox';
 import '../../../../node_modules/basiclightbox/dist/basicLightbox.min.css';
 
-export const modalToDo = basicLightbox.create(`
+export const modalToDo = basicLightbox.create(
+  `
   <div class="modal">
     <h4></h4>
-    <p class="text">test modal text</p>
+    <p class="text"></p>
     <button class="todo-modal__close-btn js-todo-modal__close-btn">ok</button>
   </div>
-`);
+`,
+  {
+    onShow: modalToDo => {
+      window.addEventListener('keydown', onEscKeyPress);
+    },
+    onClose: modalToDo => {
+      window.removeEventListener('keydown', onEscKeyPress);
+    },
+  }
+);
+
+export const onEscKeyPress = ({ code }) => {
+  if (code === 'Escape' && modalToDo.visible()) {
+    modalToDo.close();
+  }
+};
 
 export const markupForm = ` <div class="feedback-modal">
      <button
