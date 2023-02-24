@@ -102,13 +102,17 @@ function onFormSubmit(e) {
 
   const input = e.currentTarget.elements.text;
   const { value } = input;
+
   const newToDo = {
     id: uuidv4(),
     value,
     checked: false,
     created: new Date(),
   };
-
+  if (value === '') {
+    input.placeholder = 'Please, enter what do you want to do 😉';
+    return;
+  }
   todos.push(newToDo);
   e.currentTarget.reset();
   addBtn.classList.toggle('paused');
@@ -170,13 +174,13 @@ function onToDoClick(e) {
       // оголошуємо змінну audio (вже зарендерена розмітка), щоб звернутися до аудіо-елементу:
       const audio = document.querySelector('.js-audio-delete');
       console.log(audio);
-      let playPromise = audio.play();
+      //let playPromise = audio.play();
+
       // or
 
-      // let audio = new Audio('./audio/add.mp3');
-      // // відтворити аудіо
-      // audio.play();
-
+      // let audio = new Audio('../audio/delete.mp3');
+      // відтворити аудіо
+      let playPromise = audio.play();
       if (playPromise !== undefined) {
         playPromise
           .then(_ => {
@@ -208,7 +212,6 @@ function onToDoClick(e) {
       // fetchAudioAndPlay();
 
       deleteToDoItem(id);
-
       break;
 
     case 'view':
