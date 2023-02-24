@@ -77,10 +77,10 @@ function getToDo({ id, value, checked }) {
       }/>
       <span ${checkedText}>${value}</span>
       <div class="btn-wrapper">
+      <audio source src="/audio/delete.mp3" class="js-audio-delete"></audio>
           <button data-action="delete" class="todo-list__btn js-todo-list__btn">
             <i data-action="delete" class="fa-sharp fa-solid fa-trash"></i>
           </button>
-          <audio data-action="delete" src="/audio/delete.mp3" class="js-audio-delete"></audio>
           <button data-action="view" class="todo-list__btn">
            <i data-action="view" class="fa fa-sticky-note" aria-hidden="true"></i>
           </button>
@@ -163,21 +163,52 @@ function onToDoClick(e) {
 
   switch (action) {
     case 'check':
-      // const listItem = list.querySelector(`li[data-id="${id}"]`);
-      // const text = listItem.querySelector('span');
-      // text.style.textDecoration = 'line-through';
       toggleCheckbox(id);
       break;
 
     case 'delete':
-      // оголошуємо змінну audioDelete (вже зарендерена розмітка), щоб звернутися до аудіо-елементу:
-      const audioDelete = document.querySelector('.js-audio-delete');
-      audioDelete.src = '../audio/delete.mp3';
-      audioDelete.play(); //  відтворення звуку на кнопку delete
-      //Uncaught (in promise) DOMException: The play() request was interrupted because the media was removed from the document
-      // Uncaught (in promise) DOMException: запит play() було перервано, оскільки носій видалено з документа.
-      // не встигає відтворитися, перед видаленням??????
+      // оголошуємо змінну audio (вже зарендерена розмітка), щоб звернутися до аудіо-елементу:
+      const audio = document.querySelector('.js-audio-delete');
+      console.log(audio);
+      let playPromise = audio.play();
+      // or
+
+      // let audio = new Audio('./audio/add.mp3');
+      // // відтворити аудіо
+      // audio.play();
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then(_ => {
+            console.log('Automatic playback started!');
+            // Automatic playback started!
+            // Show playing UI.
+            // We can now safely pause audio...
+            audio.pause();
+          })
+          .catch(error => {
+            console.log('Auto-play was prevented');
+            // Auto-play was prevented
+            // Show paused UI.
+          });
+      }
+
+      // next other variant
+
+      //  const audio = document.querySelector('.js-audio-delete');
+      //  console.log(audio);
+      // audio.src = '../audio/add.mp3';
+      // audio.play();
+
+      // next other variant
+
+      //  const audio = document.querySelector('.js-audio-delete');
+      //  console.log(audio);
+      // audio.load();
+      // fetchAudioAndPlay();
+
       deleteToDoItem(id);
+
       break;
 
     case 'view':
@@ -186,19 +217,18 @@ function onToDoClick(e) {
   }
 }
 
-// також не працює
-
-// // вибираємо усі елементи кнопки delete
-// const deleteBtns = document.querySelectorAll('button[data-action="delete"]');
-// console.log(deleteBtns);
-
-// // додаємо подію "click" до кожної кнопки delete
-// deleteBtns.forEach(btn => {
-//   btn.addEventListener('click', () => {
-//     console.log('click audio');
-//     // відтворюємо аудіофайл
-//     const audioDelete = document.querySelector('.js-audio-delete');
-//     audioDelete.src = './audio/delete.mp3';
-//     audioDelete.play();
-//   });
-// });
+// function fetchAudioAndPlay() {
+//   console.log('fetching audio');
+//   fetch('./audio/delete.mp3')
+//     .then(response => response.blob())
+//     .then(blob => {
+//       audio.srcObject = blob;
+//       return audio.play();
+//     })
+//     .then(_ => {
+//       // audio playback started ;)
+//     })
+//     .catch(e => {
+//       // audio playback failed ;(
+//     });
+// }
