@@ -9,6 +9,7 @@ const startAudio = document.querySelector('.js-audio-start');
 const pauseAudio = document.querySelector('.js-audio-pause');
 
 let intervalId = null;
+let timeId = null;
 let elapsedMilliseconds = 0;
 const secondsInMin = 60;
 const minutesInHour = 60;
@@ -66,18 +67,12 @@ startBtn.addEventListener('click', e => {
 
 // ------- next variant with 3 buttons ------------------------
 
-const interrupt = () => {
-  pause();
-  elapsedMilliseconds = 0;
-  renderStopWatch('0 days 00:00:00:000');
-};
-
 const renderStopwatch = str =>
   (document.querySelector('.stopwatch-next').innerText = str);
 
 const begin = () => {
   const initialDate = new Date(Date.now() - elapsedMilliseconds);
-  intervalId = setInterval(() => {
+  timeId = setInterval(() => {
     const delta = new Date() - initialDate;
 
     elapsedMilliseconds = delta;
@@ -103,23 +98,36 @@ const begin = () => {
   }, 0);
 };
 
+const pauseStopwatch = () => {
+  if (timeId) {
+    clearInterval(timeId);
+    timeId = null;
+  }
+};
+
+const interrupt = () => {
+  pauseStopwatch();
+  elapsedMilliseconds = 0;
+  renderStopwatch('0 days 00:00:00:000');
+};
+
 startButton.addEventListener('click', e => {
   e.currentTarget.classList.toggle('paused');
   startAudio.paused ? startAudio.play() : startAudio.pause();
-  if (intervalId) {
-    pause();
+  if (timeId) {
+    pauseStopwatch();
   } else {
     begin();
   }
 });
 
 pauseButton.addEventListener('click', e => {
-  pause();
+  pauseStopwatch();
 });
 
 stopButton.addEventListener('click', e => {
   stopAudio.play();
-  pause();
+  pauseStopwatch();
   elapsedMilliseconds = 0;
   renderStopwatch('0 days 00 : 00 : 00 : 000');
 });
