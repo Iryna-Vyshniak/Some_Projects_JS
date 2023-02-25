@@ -5,6 +5,7 @@ const stopAudio = document.querySelector('.js-audio-stop');
 const startAudio = document.querySelector('.js-audio-start');
 
 let intervalId = null;
+let elapsedMilliseconds = 0;
 const secondsInMin = 60;
 const minutesInHour = 60;
 const hoursInDay = 24;
@@ -12,14 +13,17 @@ const hoursInDay = 24;
 const pause = () => {
   if (intervalId) {
     clearInterval(intervalId);
+    intervalId = null;
   }
 };
 
 const start = () => {
-  const initialDate = new Date();
+  //const initialDate = new Date();
+  const initialDate = new Date(Date.now() - elapsedMilliseconds);
   intervalId = setInterval(() => {
     const delta = new Date() - initialDate;
 
+    elapsedMilliseconds = delta;
     const milliseconds = Math.floor(delta % millisecondsInSec);
     const seconds = Math.floor((delta / millisecondsInSec) % secondsInMin);
     const minutes = Math.floor(
@@ -53,5 +57,9 @@ stopBtn.addEventListener('click', e => {
 startBtn.addEventListener('click', e => {
   e.currentTarget.classList.toggle('paused');
   startAudio.paused ? startAudio.play() : startAudio.pause();
-  start();
+  if (intervalId) {
+    pause();
+  } else {
+    start();
+  }
 });
