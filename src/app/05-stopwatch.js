@@ -35,15 +35,12 @@ const start = () => {
     const hours = Math.floor(
       (delta / (millisecondsInSec * secondsInMin * minutesInHour)) % hoursInDay
     );
-    const days = Math.floor(
-      delta / (millisecondsInSec * secondsInMin * minutesInHour * hoursInDay)
-    );
 
     const UISeconds = String(seconds).padStart(2, '0');
     const UIMinutes = String(minutes).padStart(2, '0');
     const UIHours = String(hours).padStart(2, '0');
 
-    const stopwatcherFormat = `${days} days ${UIHours} : ${UIMinutes} : ${UISeconds} : ${milliseconds}`;
+    const stopwatcherFormat = `${UIHours} : ${UIMinutes} : ${UISeconds} : ${milliseconds}`;
 
     renderStopWatch(stopwatcherFormat);
   }, 0);
