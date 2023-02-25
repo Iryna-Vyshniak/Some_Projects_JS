@@ -1,11 +1,18 @@
-.stopwatch-wrapper {
+.stopwatch-wrapper,
+.stopwatch-wrapper--next {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 30px;
     margin: 0 auto;
+    margin-bottom: 300px;
     padding: 3.125rem;
 }
+
+.stopwatch-wrapper--next {
+    margin-bottom: 0;
+}
+
 
 .buttons-wrapper {
     display: flex;
@@ -13,6 +20,7 @@
     column-gap: 30px;
 }
 
+button.pause,
 button.stop,
 button.start {
     width: 82px;
@@ -27,31 +35,37 @@ button.start {
     transition: 0.05s ease;
 }
 
+button.pause:hover,
 button.stop:hover,
 button.start:hover {
     box-shadow: -0.0313rem -0.0313rem 0.125rem #fff, 0.0313rem 0.0313rem 0.125rem rgba(83, 8, 8, 0.8);
     text-shadow: -0.0313rem -0.0313rem 0rem #baa2c5, 0.0313rem 0.0313rem 0rem #ffffff;
 }
 
+button.pause:active,
 button.stop:active,
 button.start:active {
     box-shadow: -0.0313rem -0.0313rem 0.125rem #fff, 0.0313rem 0.0313rem 0.125rem rgba(83, 8, 8, 0.8);
     text-shadow: -0.0313rem -0.0313rem 0rem #baa2c5, 0.0313rem 0.0313rem 0rem #ffffff;
 }
 
-
+button.pause,
 button.stop,
 button.start,
-.stopwatch {
+.stopwatch,
+.stopwatch-next {
     color: #f1ebe5;
     text-shadow: 0 4px 5px #baa2c5, 0rem -2px 1px #fff;
     font-size: 2.125rem;
     font-weight: 700;
 }
 
+button.pause,
 button.stop,
 button.start {
-    color: #dbe2fc;
-    font-size: 1.525rem;
-    text-shadow: 0 2px 3px #baa2c5, 0rem -1px 1px #fff;
+    color: #cfc5d4;
+    // color: #dbe2fc;
+    font-size: 1.225rem;
+    text-shadow: 0 1px 1px #a689b3, 0 -1px 1px #fff;
+    letter-spacing: 1.5px;
 }
