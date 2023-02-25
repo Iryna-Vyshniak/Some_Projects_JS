@@ -4,7 +4,7 @@ const startBtn = document.querySelector('.js-start');
 const stopAudio = document.querySelector('.js-audio-stop');
 const startAudio = document.querySelector('.js-audio-start');
 
-let intervalId;
+let intervalId = null;
 const secondsInMin = 60;
 const minutesInHour = 60;
 const hoursInDay = 24;
