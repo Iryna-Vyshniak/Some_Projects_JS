@@ -13,7 +13,8 @@
     column-gap: 30px;
 }
 
-button {
+button.stop,
+button.start {
     width: 82px;
     height: 82px;
     border-radius: 50%;
@@ -26,18 +27,21 @@ button {
     transition: 0.05s ease;
 }
 
-button:hover {
+button.stop:hover,
+button.start:hover {
     box-shadow: -0.0313rem -0.0313rem 0.125rem #fff, 0.0313rem 0.0313rem 0.125rem rgba(83, 8, 8, 0.8);
     text-shadow: -0.0313rem -0.0313rem 0rem #baa2c5, 0.0313rem 0.0313rem 0rem #ffffff;
 }
 
-button:active {
+button.stop:active,
+button.start:active {
     box-shadow: -0.0313rem -0.0313rem 0.125rem #fff, 0.0313rem 0.0313rem 0.125rem rgba(83, 8, 8, 0.8);
     text-shadow: -0.0313rem -0.0313rem 0rem #baa2c5, 0.0313rem 0.0313rem 0rem #ffffff;
 }
 
 
-button,
+button.stop,
+button.start,
 .stopwatch {
     color: #f1ebe5;
     text-shadow: 0 4px 5px #baa2c5, 0rem -2px 1px #fff;
@@ -45,7 +49,8 @@ button,
     font-weight: 700;
 }
 
-button {
+button.stop,
+button.start {
     color: #dbe2fc;
     font-size: 1.525rem;
     text-shadow: 0 2px 3px #baa2c5, 0rem -1px 1px #fff;
