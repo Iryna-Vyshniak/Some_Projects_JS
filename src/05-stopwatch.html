@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>05-stopwatcher</title>
+    <link rel="stylesheet" href="./sass/index.scss" />
+  </head>
+  <body>
+    <p><a class="main-link" href="./index.html">Home</a></p>
+    <div class="stopwatch-wrapper">
+      <div class="buttons-wrapper">
+        <button type="button" class="stop js-stop paused">Stop</button>
+        <audio src="./audio/delete.mp3" class="js-audio-stop"></audio>
+        <button type="button" class="start js-start paused">Start</button>
+        <audio src="./audio/start.mp3" class="js-audio-start"></audio>
+      </div>
+      <div class="stopwatch"></div>
+    </div>
+    <script src="./app/05-stopwatch.js" type="module"></script>
+  </body>
+</html>
