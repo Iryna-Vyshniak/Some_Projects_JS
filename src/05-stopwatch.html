@@ -16,7 +16,17 @@
         <button type="button" class="start js-start paused">Start</button>
         <audio src="./audio/start.mp3" class="js-audio-start"></audio>
       </div>
-      <div class="stopwatch"></div>
+      <div class="stopwatch">0 days 00 : 00 : 00 : 000</div>
+    <div class="stopwatch-wrapper--next">
+      <div class="buttons-wrapper">
+        <button type="button" class="start js-start__stopwatch paused">Start</button>
+        <audio src="./audio/start.mp3" class="js-audio-start"></audio>
+        <button type="button" class="pause js-pause__stopwatch paused">Pause</button>
+        <audio src="./audio/pause.mp3" class="js-audio-pause"></audio>
+        <button type="button" class="stop js-stop__stopwatch paused">Stop</button>
+        <audio src="./audio/delete.mp3" class="js-audio-stop"></audio>
+      </div>
+      <div class="stopwatch-next">0 days 00 : 00 : 00 : 000</div>
     </div>
     <script src="./app/05-stopwatch.js" type="module"></script>
   </body>
