@@ -5,6 +5,7 @@ import throttle from 'lodash.throttle';
 import { markupForm } from './components';
 
 const LOCAL_KEY = 'feedback-form-state';
+let timerId;
 const btnOpenModal = document.querySelector('.js-modal-form');
 btnOpenModal.addEventListener('click', openModal);
 
@@ -28,7 +29,10 @@ function createModalInstance() {
     },
     onClose: instance => {
       window.removeEventListener('keydown', onEscKeyPress);
-      setTimeout(() => {
+      if (timerId) {
+      clearTimeout(timerId)
+      }
+      timerId = setTimeout(() => {
         btnOpenModal.classList.add('active');
       }, 500);
     },
@@ -97,7 +101,10 @@ function createModalInstance() {
       input.classList.add('invalid');
       input.classList.remove('valid');
       content.innerHTML = errorWarning;
-      setTimeout(() => {
+      if (timerId) {
+        clearTimeout(timerId);
+      }
+      timerId = setTimeout(() => {
         content.innerHTML = '';
       }, 8000);
     }
