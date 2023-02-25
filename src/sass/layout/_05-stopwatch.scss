@@ -1,0 +1,52 @@
+.stopwatch-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin: 0 auto;
+    padding: 3.125rem;
+}
+
+.buttons-wrapper {
+    display: flex;
+    align-items: center;
+    column-gap: 30px;
+}
+
+button {
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-shadow: -0.3125rem -0.3125rem 1.25rem #fff, 0.3125rem 0.3125rem 1.25rem #babecc;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    transition: 0.05s ease;
+}
+
+button:hover {
+    box-shadow: -0.0313rem -0.0313rem 0.125rem #fff, 0.0313rem 0.0313rem 0.125rem rgba(83, 8, 8, 0.8);
+    text-shadow: -0.0313rem -0.0313rem 0rem #baa2c5, 0.0313rem 0.0313rem 0rem #ffffff;
+}
+
+button:active {
+    box-shadow: -0.0313rem -0.0313rem 0.125rem #fff, 0.0313rem 0.0313rem 0.125rem rgba(83, 8, 8, 0.8);
+    text-shadow: -0.0313rem -0.0313rem 0rem #baa2c5, 0.0313rem 0.0313rem 0rem #ffffff;
+}
+
+
+button,
+.stopwatch {
+    color: #f1ebe5;
+    text-shadow: 0 4px 5px #baa2c5, 0rem -2px 1px #fff;
+    font-size: 2.125rem;
+    font-weight: 700;
+}
+
+button {
+    color: #dbe2fc;
+    font-size: 1.525rem;
+    text-shadow: 0 2px 3px #baa2c5, 0rem -1px 1px #fff;
+}
