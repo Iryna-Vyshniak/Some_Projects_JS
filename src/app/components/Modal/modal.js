@@ -6,6 +6,7 @@ export const modalToDo = basicLightbox.create(
   <div class="modal">
     <h4></h4>
     <p class="text"></p>
+    <p class="textUk"></p>
     <button class="todo-modal__close-btn js-todo-modal__close-btn">ok</button>
   </div>
 `,
