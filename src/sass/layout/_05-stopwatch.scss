@@ -105,3 +105,14 @@ button.start {
     word-wrap: break-word;
 
 }
+
+.time-now {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    color: #9e0202;
+    text-shadow: 1px 1px 1px #fff;
+    font-size: calc($index * .5);
+    font-weight: 700;
+    letter-spacing: .1938rem;
+}
