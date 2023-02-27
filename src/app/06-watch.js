@@ -57,7 +57,7 @@ setInterval(() => {
   const moveSeconds = currentDay.getSeconds() * 6;
   const moveMinutes = currentDay.getMinutes() * 6;
   const moveHours =
-    currentDay.getHours() * 30 + currentDay.getMinutes() + 30 / 60;
+    currentDay.getHours() * 30 + currentDay.getMinutes() * (30 / 60);
 
   arrowSeconds.style.transform = `rotate(${moveSeconds}deg)`;
   arrowMinutes.style.transform = `rotate(${moveMinutes}deg)`;
