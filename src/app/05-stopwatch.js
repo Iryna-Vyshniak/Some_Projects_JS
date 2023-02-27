@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const millisecondsInSec = 1000;
 const stopBtn = document.querySelector('.js-stop');
 const stopButton = document.querySelector('.js-stop__stopwatch');
@@ -7,6 +9,9 @@ const pauseButton = document.querySelector('.js-pause__stopwatch');
 const stopAudio = document.querySelector('.js-audio-stop');
 const startAudio = document.querySelector('.js-audio-start');
 const pauseAudio = document.querySelector('.js-audio-pause');
+const timeNow = document.querySelector('.js-time-now');
+
+timeNow.textContent = moment().format('dddd, MMMM Do YYYY, h:mm:ss a');
 
 let intervalId = null;
 let timeId = null;
