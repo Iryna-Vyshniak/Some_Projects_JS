@@ -1,3 +1,6 @@
+import moment from 'moment';
+import { format } from 'date-fns';
+import { uk } from 'date-fns/locale';
 import { v4 as uuidv4 } from 'uuid';
 import toastr from 'toastr';
 import '../../node_modules/toastr/toastr.scss';
@@ -10,6 +13,7 @@ const form = document.querySelector('.js-form-todo');
 const list = document.querySelector('.js-todo-list');
 const addBtn = form.querySelector('button[data-action="add"]');
 const audioAdd = form.querySelector('.js-audio-add');
+const dayNow = document.querySelector('.js-day-now');
 //const audioDelete = document.querySelector('.js-audio-delete'); - null поки не зарендериться хоча б одна тудушка, потрібно оновлювати сторінку
 
 // const btns = list.querySelector('.btn-wrapper'); -для делегації подій для кнопок
@@ -39,7 +43,8 @@ if (dayHour >= 11 && dayHour <= 17) {
 }
 
 const greetingBlock = document.querySelector('.greeting');
-greetingBlock.innerHTML = greeting;
+greetingBlock.insertAdjacentHTML('afterbegin', greeting);
+dayNow.textContent = moment().format('[Today is] dddd ');
 
 // todo
 
@@ -107,7 +112,10 @@ function onFormSubmit(e) {
     id: uuidv4(),
     value,
     checked: false,
-    created: new Date(),
+    created: format(Date.now(), 'HH:mm BBBB cccc do MMMM yyyy'),
+    createdUk: format(Date.now(), 'HH:mm BBBB cccc do MMMM yyyy', {
+      locale: uk,
+    }),
   };
   if (value === '') {
     input.placeholder = 'Please, enter what do you want to do 😉';
@@ -147,13 +155,15 @@ function deleteToDoItem(id) {
 
 //view
 function viewToDo(id) {
-  const { created } = todos.find(todo => todo.id === id);
+  const { created, createdUk } = todos.find(todo => todo.id === id);
   const { value } = todos.find(todo => todo.id === id);
 
   const text = modalToDo.element().querySelector('.text');
+  const textUk = modalToDo.element().querySelector('.textUk');
   const title = modalToDo.element().querySelector('h4');
 
   text.textContent = created;
+  textUk.textContent = createdUk;
   title.textContent = value;
   modalToDo.show();
 }
