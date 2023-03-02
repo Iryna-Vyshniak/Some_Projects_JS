@@ -1,6 +1,5 @@
 import moment from 'moment';
 
-const millisecondsInSec = 1000;
 const stopBtn = document.querySelector('.js-stop');
 const stopButton = document.querySelector('.js-stop__stopwatch');
 const startBtn = document.querySelector('.js-start');
@@ -10,65 +9,88 @@ const stopAudio = document.querySelector('.js-audio-stop');
 const startAudio = document.querySelector('.js-audio-start');
 const pauseAudio = document.querySelector('.js-audio-pause');
 const timeNow = document.querySelector('.js-time-now');
+const clockface = document.querySelector('.stopwatch');
 
 timeNow.textContent = moment().format('dddd, MMMM Do YYYY, h:mm:ss a');
 
-let intervalId = null;
 let timeId = null;
+let intervalId = null;
 let elapsedMilliseconds = 0;
+const millisecondsInSec = 1000;
 const secondsInMin = 60;
 const minutesInHour = 60;
 const hoursInDay = 24;
 
-const pause = () => {
-  if (intervalId) {
+class Timer {
+  constructor({ onTick }) {
+    this.isActive = false;
+    this.onTick = onTick;
+  }
+
+  init() {
+    const time = this.getTimeComponents(0);
+    this.onTick(time);
+  }
+
+  start() {
+    if (this.isActive) {
+      return;
+    }
+
+    const startTime = Date.now();
+    this.isActive = true;
+    startAudio.play();
+
+    intervalId = setInterval(() => {
+      startAudio.pause();
+      const currentTime = Date.now();
+      const deltaTime = currentTime - startTime;
+      const time = this.getTimeComponents(deltaTime);
+
+      this.onTick(time);
+    }, 1000);
+  }
+
+  stop() {
+    stopAudio.play();
     clearInterval(intervalId);
-    intervalId = null;
+    this.isActive = false;
+    const time = this.getTimeComponents(0);
+    this.onTick(time);
   }
-};
 
-const start = () => {
-  const initialDate = new Date(Date.now() - elapsedMilliseconds);
-  intervalId = setInterval(() => {
-    const delta = new Date() - initialDate;
+  pause() {
+    if (intervalId) {
+      clearInterval(intervalId);
+      intervalId = null;
+    }
+  }
 
-    elapsedMilliseconds = delta;
-    const milliseconds = Math.floor(delta % millisecondsInSec);
-    const seconds = Math.floor((delta / millisecondsInSec) % secondsInMin);
-    const minutes = Math.floor(
-      (delta / (millisecondsInSec * secondsInMin)) % minutesInHour
+  getTimeComponents(time) {
+    const hours = this.pad(
+      Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
     );
-    const hours = Math.floor(
-      (delta / (millisecondsInSec * secondsInMin * minutesInHour)) % hoursInDay
-    );
+    const mins = this.pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
+    const secs = this.pad(Math.floor((time % (1000 * 60)) / 1000));
 
-    const UISeconds = String(seconds).padStart(2, '0');
-    const UIMinutes = String(minutes).padStart(2, '0');
-    const UIHours = String(hours).padStart(2, '0');
+    return { hours, mins, secs };
+  }
 
-    const stopwatcherFormat = `${UIHours} : ${UIMinutes} : ${UISeconds} : ${milliseconds}`;
+  pad(value) {
+    return String(value).padStart(2, '0');
+  }
+}
 
-    renderStopWatch(stopwatcherFormat);
-  }, 0);
-};
+function updateClockface({ hours, mins, secs, milliseconds }) {
+  clockface.textContent = `${hours} : ${mins} : ${secs}`;
+}
 
-const renderStopWatch = str =>
-  (document.querySelector('.stopwatch').innerText = str);
-
-stopBtn.addEventListener('click', e => {
-  stopAudio.play();
-  pause();
+const timer = new Timer({
+  onTick: updateClockface,
 });
 
-startBtn.addEventListener('click', e => {
-  e.currentTarget.classList.toggle('paused');
-  startAudio.paused ? startAudio.play() : startAudio.pause();
-  if (intervalId) {
-    pause();
-  } else {
-    start();
-  }
-});
+startBtn.addEventListener('click', timer.start.bind(timer));
+stopBtn.addEventListener('click', timer.stop.bind(timer));
 
 // ------- next variant with 3 buttons ------------------------
 
@@ -117,8 +139,7 @@ const interrupt = () => {
 };
 
 startButton.addEventListener('click', e => {
-  e.currentTarget.classList.toggle('paused');
-  startAudio.paused ? startAudio.play() : startAudio.pause();
+  startAudio.play();
   if (timeId) {
     pauseStopwatch();
   } else {
@@ -127,7 +148,12 @@ startButton.addEventListener('click', e => {
 });
 
 pauseButton.addEventListener('click', e => {
-  pauseStopwatch();
+  pauseAudio.play();
+  if (timeId) {
+    pauseStopwatch();
+  } else {
+    begin();
+  }
 });
 
 stopButton.addEventListener('click', e => {
