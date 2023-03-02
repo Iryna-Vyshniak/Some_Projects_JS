@@ -8,25 +8,31 @@
     <link rel="stylesheet" href="./sass/index.scss" />
   </head>
   <body class="todo">
-    <p><a class="main-link" href="./index.html">Home</a></p>
-    <h1 class="greeting"><div class="day-now js-day-now"></div></h1>
-    <div class="todo-wrapper">
-      <!-- form ToDo -->
-      <form action="#" class="form-todo js-form-todo">
-        <input
-          type="text"
-          name="text"
-          class="form-todo__input js-form-todo__input"
-          placeholder="Enter what do you want to do..."
-        />
-        <button data-action="add" type="submit" class="form-todo__btn paused">
-          ADD
-        </button>
-        <audio src="./audio/add.mp3" class="js-audio-add"></audio>
-      </form>
-      <!-- ToDo list -->
-      <ul class="todo-list js-todo-list"></ul>
-    </div>
+    <main class="main-todo">
+      <ul>
+        <li class="main-item">
+          <a class="main-link" href="./index.html">Home</a>
+        </li>
+      </ul>
+      <h1 class="greeting"><div class="day-now js-day-now"></div></h1>
+      <div class="todo-wrapper">
+        <!-- form ToDo -->
+        <form action="#" class="form-todo js-form-todo">
+          <input
+            type="text"
+            name="text"
+            class="form-todo__input js-form-todo__input"
+            placeholder="Enter what do you want to do..."
+          />
+          <button data-action="add" type="submit" class="form-todo__btn paused">
+            ADD
+          </button>
+          <audio src="./audio/add.mp3" class="js-audio-add"></audio>
+        </form>
+        <!-- ToDo list -->
+        <ul class="todo-list js-todo-list"></ul>
+      </div>
+    </main>
     <script
       src="https://kit.fontawesome.com/bd3e78b64a.js"
       crossorigin="anonymous"

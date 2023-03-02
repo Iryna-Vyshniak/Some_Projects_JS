@@ -8,65 +8,67 @@
     <link rel="stylesheet" href="./sass/index.scss" />
   </head>
   <body>
-    <ul>
-      <li class="main-item">
-        <a class="main-link" href="./index.html">Home</a>
-      </li>
-    </ul>
-    <div class="watch-wrapper">
-      <!-- calendar -->
-      <div class="calendar">
-        <div class="date-style">
-          День тижня:
-          <div class="date-day">0</div>
+    <main class="main-watch">
+      <ul>
+        <li class="main-item">
+          <a class="main-link" href="./index.html">Home</a>
+        </li>
+      </ul>
+      <div class="watch-wrapper">
+        <!-- calendar -->
+        <div class="calendar">
+          <div class="date-style">
+            День тижня:
+            <div class="date-day">0</div>
+          </div>
+          <div class="date-style">
+            День місяця:
+            <div class="date">0</div>
+          </div>
+          <div class="date-style">
+            Місяць:
+            <div class="date-month">0</div>
+          </div>
+          <div class="date-style">
+            Рік:
+            <div class="date-year">0</div>
+          </div>
         </div>
-        <div class="date-style">
-          День місяця:
-          <div class="date">0</div>
-        </div>
-        <div class="date-style">
-          Місяць:
-          <div class="date-month">0</div>
-        </div>
-        <div class="date-style">
-          Рік:
-          <div class="date-year">0</div>
-        </div>
-      </div>
-      <!-- digital-clock -->
-      <div class="digital-clock">0</div>
-      <!-- watch -->
-      <div class="clock">
-        <div class="hour">
-          <div class="hr" id="hours__arrow"></div>
-        </div>
-        <div class="minute">
-          <div class="mn" id="minutes__arrow"></div>
-        </div>
-        <div class="second">
-          <div class="sc" id="seconds__arrow"></div>
-        </div>
-        <div class="num" id="num1">
-          |
-          <br />
-          <span id="three">3</span>
-        </div>
-        <div class="num" id="num2">
-          |
-          <br />
-          <span id="six">6</span>
-        </div>
-        <div class="num" id="num3">
-          | <br />
-          <span id="nine">9</span>
-        </div>
-        <span id="twelve">12</span>
-        <div class="num" id="num4">
-          | <br />
+        <!-- digital-clock -->
+        <div class="digital-clock">0</div>
+        <!-- watch -->
+        <div class="clock">
+          <div class="hour">
+            <div class="hr" id="hours__arrow"></div>
+          </div>
+          <div class="minute">
+            <div class="mn" id="minutes__arrow"></div>
+          </div>
+          <div class="second">
+            <div class="sc" id="seconds__arrow"></div>
+          </div>
+          <div class="num" id="num1">
+            |
+            <br />
+            <span id="three">3</span>
+          </div>
+          <div class="num" id="num2">
+            |
+            <br />
+            <span id="six">6</span>
+          </div>
+          <div class="num" id="num3">
+            | <br />
+            <span id="nine">9</span>
+          </div>
           <span id="twelve">12</span>
+          <div class="num" id="num4">
+            | <br />
+            <span id="twelve">12</span>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
 
     <script src="./app/06-watch.js" type="module"></script>
   </body>
