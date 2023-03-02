@@ -1,10 +1,11 @@
+.main-stopwatch {
+    overflow: hidden;
+}
+
 .stopwatch-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     display: block;
-    // margin: 0 auto;
+    margin: 0 auto;
+    margin-top: 80px;
     padding: 12px;
     max-width: 100%;
     width: 600px;
