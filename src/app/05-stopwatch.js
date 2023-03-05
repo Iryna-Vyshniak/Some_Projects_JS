@@ -11,7 +11,13 @@ const pauseAudio = document.querySelector('.js-audio-pause');
 const timeNow = document.querySelector('.js-time-now');
 const clockface = document.querySelector('.stopwatch');
 
-timeNow.textContent = moment().format('dddd, MMMM Do YYYY, h:mm:ss a');
+function updateTime() {
+  timeNow.textContent = moment().format('dddd, MMMM Do YYYY, h:mm:ss a');
+}
+
+const interval = setInterval(updateTime, 1000);
+
+window.addEventListener('unload', () => clearInterval(interval));
 
 let timeId = null;
 let intervalId = null;
