@@ -6,6 +6,13 @@ import Notiflix from 'notiflix';
 
 const galleryContainer = document.querySelector('.gallery');
 
+const gallery = new SimpleLightbox('.gallery a', {
+  closeText: 'x',
+  captionsData: 'alt',
+  captionDelay: 250,
+  scrollZoom: false,
+});
+
 function renderMarkup(items) {
   return items.reduce(
     (acc, { alt, src: { large, original } }) =>
@@ -32,17 +39,11 @@ function setTitleImages(value) {
       // console.log(renderMarkup(photos));
       return renderMarkup(photos);
     })
-    .then(data => (galleryContainer.innerHTML = data))
+    .then(data => {
+      galleryContainer.innerHTML = data;
+      gallery.refresh();
+    })
     .catch(err => console.log(err));
 }
 
 setTitleImages();
-
-const gallery = new SimpleLightbox('.gallery a', {
-  closeText: 'x',
-  captionsData: 'alt',
-  captionDelay: 250,
-  scrollZoom: false,
-});
-
-// -------------------------------------
