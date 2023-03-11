@@ -2,12 +2,14 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { createClient } from 'pexels';
 
+import Notiflix from 'notiflix';
+
 const galleryContainer = document.querySelector('.gallery');
 
 function renderMarkup(items) {
   return items.reduce(
     (acc, { alt, src: { large, original } }) =>
-      (acc += `<a class="gallery__item" href="${original}">
+      (acc += `<a class="gallery__item-catalog" href="${original}">
     <img
       class="gallery__image"
       src="${large}"
@@ -42,3 +44,5 @@ const gallery = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
   scrollZoom: false,
 });
+
+// -------------------------------------
