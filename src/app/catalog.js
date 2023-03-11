@@ -30,7 +30,7 @@ function renderMarkup(items) {
 function setTitleImages(value) {
   const API_KEY = 'nK8dQ9g0n9ztLpNfMUyyoRWjFaSsbPf5sCCcMrST8otmYHlyeXOtDq1p';
   const client = createClient(API_KEY);
-  let query = 'Ukraine';
+  let query = 'Sun Morning';
 
   client.photos
     .search({ query, per_page: 40 })
