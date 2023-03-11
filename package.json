@@ -24,6 +24,7 @@
     "lodash.throttle": "^4.1.1",
     "modern-normalize": "^1.1.0",
     "moment": "^2.29.4",
+    "notiflix": "^3.2.6",
     "pexels": "^1.4.0",
     "simplelightbox": "^2.12.1",
     "toastr": "^2.1.4",
