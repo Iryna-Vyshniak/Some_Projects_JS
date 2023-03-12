@@ -16,14 +16,43 @@
     <link rel="stylesheet" href="./sass/index.scss" />
   </head>
   <body>
+    <header class="catalog-header">
+      <div class="catalog-header__container">
+        <div class="catalog__nav-wrapper">
+          <ul class="catalog-ul">
+            <li class="main-item">
+              <a class="main-link" href="./index.html">Home</a>
+            </li>
+          </ul>
+          <div
+            class="catalog-header__search-wrapper js-catalog-header__search-wrapper"
+          >
+            <form action="submit" class="catalog-form" id="catalog-form">
+              <input
+                type="text"
+                name="query"
+                id="catalog-search"
+                class="catalog-header__input search"
+                placeholder="Search photo"
+              />
+              <button type="submit" id="catalog-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </header>
     <main>
-      <ul>
-        <li class="main-item">
-          <a class="main-link" href="./index.html">Home</a>
-        </li>
-      </ul>
       <div class="gallery"></div>
+      <button hidden class="gallery__load-btn js-gallery__load-btn">
+        Load More
+      </button>
     </main>
+    <script
+      src="https://kit.fontawesome.com/bd3e78b64a.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="./app/catalog.js" type="module"></script>
   </body>
 </html>
