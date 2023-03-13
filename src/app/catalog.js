@@ -18,11 +18,13 @@ const API_KEY = 'nK8dQ9g0n9ztLpNfMUyyoRWjFaSsbPf5sCCcMrST8otmYHlyeXOtDq1p';
 
 // search input is hidden or focused
 document.addEventListener('click', e => {
+  console.log(e.target);
   if (e.target.className.indexOf('search')) {
     searchWrapper.classList.add('focused');
     searchInput.focus();
   } else {
     searchWrapper.classList.remove('focused');
+    searchInput.blur();
   }
 });
 
@@ -110,7 +112,6 @@ function onSearch(e) {
     searchInput.placeholder = 'What`re we looking for?';
     return;
   }
-
   loadMoreBtn.show();
   photosApiService.resetPage(); // reset page every time when submit form
   fetchPhotos();
@@ -150,6 +151,7 @@ function fetchPhotos() {
       //  console.log(photos);
       clearGalleryContainer();
       insertContent(photos);
+
       gallery.refresh();
       loadMoreBtn.enable();
     })
