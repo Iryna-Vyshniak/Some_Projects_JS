@@ -18,13 +18,13 @@ const API_KEY = 'nK8dQ9g0n9ztLpNfMUyyoRWjFaSsbPf5sCCcMrST8otmYHlyeXOtDq1p';
 
 // search input is hidden or focused
 document.addEventListener('click', e => {
-  // console.log(e.target);
+  console.log(e.target.className.indexOf('search'));
   if (e.target.className.indexOf('search')) {
     searchWrapper.classList.add('focused');
-    searchInput.focus();
+    //searchInput.focus();
   } else {
     searchWrapper.classList.remove('focused');
-    searchInput.blur();
+    //searchInput.blur();
   }
 });
 
@@ -33,6 +33,11 @@ const loadMoreBtn = new LoadMoreBtn({
   selector: '[data-action="load-more"]',
   hidden: true,
 });
+
+// notiflix options
+const reportOptions = {
+  timeout: 3000,
+};
 
 //modal photos
 const gallery = new SimpleLightbox('.gallery a', {
@@ -68,7 +73,8 @@ class PhotosApiService {
           Report.failure(
             '🥺 Ooops...',
             'Your request isn`t clear, please, try again',
-            'Okay'
+            'Okay',
+            reportOptions
           );
         }
         this.incrementPage();
@@ -107,12 +113,13 @@ function onSearch(e) {
     Report.info(
       'What`re we looking for?',
       'Please, enter what do you want to search 😉',
-      'Okay'
+      'Okay',
+      reportOptions
     );
     searchInput.placeholder = 'What`re we looking for?';
     return;
   }
-  searchInput.blur();
+  //searchInput.blur();
   loadMoreBtn.show();
   photosApiService.resetPage(); // reset page every time when submit form
   fetchPhotos();
@@ -161,7 +168,8 @@ function fetchPhotos() {
       Report.failure(
         '🥺 Ooops...',
         'Your request isn`t clear, please, try again',
-        'Okay'
+        'Okay',
+        reportOptions
       );
     });
 }
