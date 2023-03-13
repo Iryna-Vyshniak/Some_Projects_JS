@@ -46,6 +46,7 @@ form.addEventListener('submit', onSearch);
 loadMoreBtn.refs.button.addEventListener('click', fetchPhotos);
 
 //console.log(loadMoreBtn.refs.button);
+loadMoreBtn.hide();
 
 class PhotosApiService {
   constructor() {
@@ -60,6 +61,14 @@ class PhotosApiService {
     return client.photos
       .search({ query: this.query, per_page: 20, page: this.page })
       .then(({ photos }) => {
+        if (!photos.length) {
+          loadMoreBtn.hide();
+          Report.failure(
+            '🥺 Ooops...',
+            'Your request isn`t clear, please, try again',
+            'Okay'
+          );
+        }
         this.incrementPage();
 
         return photos; //data.photos
@@ -144,7 +153,14 @@ function fetchPhotos() {
       gallery.refresh();
       loadMoreBtn.enable();
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      loadMoreBtn.hide();
+      Report.failure(
+        '🥺 Ooops...',
+        'Your request isn`t clear, please, try again',
+        'Okay'
+      );
+    });
 }
 
 // !---- LOADING----------------------------------------
