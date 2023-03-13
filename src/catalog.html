@@ -45,8 +45,17 @@
     </header>
     <main>
       <div class="gallery"></div>
-      <button hidden class="gallery__load-btn js-gallery__load-btn">
-        Load More
+      <button
+        class="gallery__load-btn js-gallery__load-btn"
+        data-action="load-more"
+      >
+        <span
+          class="loading spinner js-spinner is-hidden"
+          role="status"
+          aria-hidden="true"
+        ></span>
+
+        <span class="label">Load More</span>
       </button>
     </main>
     <script
