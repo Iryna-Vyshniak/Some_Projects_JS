@@ -29,7 +29,7 @@
 
 .catalog__nav-wrapper {
     display: flex;
-    align-content: baseline;
+    align-items: center;
     justify-content: space-between;
     width: 100%;
 }
@@ -193,8 +193,8 @@ img {
 
 .gallery__item-catalog {
     position: relative;
-    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
-        0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+    box-shadow: -1px 1px 3px rgba(#aa6ede, 1), 1px -1px 3px rgba(#ffffff, 1);
 }
 
 .gallery__item-catalog:hover {
@@ -277,4 +277,47 @@ img {
         box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #fff;
     }
 
+}
+
+// ---- loading -----------------------------
+
+.spinner {
+    display: block;
+    margin: 0 .5em;
+    padding: .1em .3em;
+
+    width: 1em;
+    height: 1em;
+    overflow: hidden;
+
+    background-color: transparent;
+    transition: all 0.3s ease, background-color 0.01s ease, color 0.01s ease;
+
+
+    &.spinner--loading {
+        padding: 0;
+        width: 1.5em;
+        height: 1.5em;
+        animation: rotate 1.5s linear infinite;
+        animation-delay: 200ms;
+        background-color: transparent;
+        border: 0.1em solid #ffffff;
+        border-radius: 1.5em;
+        border-top-color: #9e0202;
+        box-sizing: border-box;
+        color: transparent;
+
+        pointer-events: none;
+
+    }
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.is-hidden {
+    display: none;
 }
