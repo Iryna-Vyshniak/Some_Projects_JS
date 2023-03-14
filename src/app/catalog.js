@@ -48,6 +48,12 @@ const gallery = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
   scrollZoom: false,
 });
+const simpleLightbox = new SimpleLightbox('.gallery a', {
+  closeText: 'x',
+  captionsData: 'alt',
+  captionDelay: 250,
+  scrollZoom: false,
+});
 
 // gallery
 
@@ -88,6 +94,19 @@ class PhotosApiService {
       });
   }
 
+  fetchPhotosMainPage() {
+    //console.log(this);
+    const client = createClient(API_KEY);
+    const queries = 'Sun Morning';
+
+    return client.photos.search({ query: queries, per_page: 40 }).then(data => {
+      if (!data.photos.length) {
+        loadMoreBtn.hide();
+      }
+      return data;
+    });
+  }
+
   get searchQuery() {
     return this.query;
   }
@@ -106,6 +125,18 @@ class PhotosApiService {
 }
 
 const photosApiService = new PhotosApiService();
+const photosApiServiceMainPage = new PhotosApiService();
+
+photosApiServiceMainPage
+  .fetchPhotosMainPage()
+  .then(({ photos }) => {
+    insertContent(photos, renderMainPageMarkup);
+    simpleLightbox.refresh();
+    loadMoreBtn.hide();
+  })
+  .catch(err => {
+    console.log(err);
+  });
 
 function onSearch(e) {
   e.preventDefault();
@@ -147,19 +178,40 @@ function onSearch(e) {
 }
 
 const renderMarkup =
-  photos => `<a class="gallery__item-catalog" href="${photos.src.original}">
+  photos => `<a class="gallery__item-catalog gallery__item--catalog-main" href="${photos.src.original}">
+  <div class="gallery__thumb-img">
     <img
       class="gallery__image"
       src="${photos.src.large}"
       alt="${photos.alt}"
     />
-  </a>`;
+    </div>
+    <div class="gallery__content-img">
+  <h4 class="gallery-item__title-catalog">${photos.alt}</h4>
+  </div>`;
 
-const generateGalleryContent = arr =>
-  arr?.reduce((acc, item) => acc + renderMarkup(item), '');
+const renderMainPageMarkup =
+  photos => `<a class="gallery__item gallery__item--catalog-main" href="${
+    photos.src.original
+  }">
+  <div class="gallery__thumb-img">
+    <img
+      class="gallery__image"
+      src="${photos.src.large}"
+      alt="${photos.alt}"
+    />
+    </div>
+    <div class="gallery__content-img">
+  <h4 class="gallery-item__title-catalog">${photos.alt.slice(0, 66)}</h4>
+  </div>
+  </a>
+  `;
 
-const insertContent = arr => {
-  const result = generateGalleryContent(arr);
+const generateGalleryContent = (arr, markup) =>
+  arr?.reduce((acc, item) => acc + markup(item), '');
+
+const insertContent = (arr, markup) => {
+  const result = generateGalleryContent(arr, markup);
   galleryContainer.insertAdjacentHTML('beforeend', result);
 };
 
@@ -178,7 +230,7 @@ function fetchPhotos() {
   photosApiService
     .fetchPhotosGallery()
     .then(({ photos, per_page }) => {
-      insertContent(photos);
+      insertContent(photos, renderMarkup);
       gallery.refresh();
 
       loadMoreBtn.enable();
