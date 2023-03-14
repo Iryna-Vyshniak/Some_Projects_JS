@@ -153,7 +153,6 @@ function onSearch(e) {
       'Okay',
       reportOptions
     );
-    searchInput.placeholder = 'What`re we looking for?';
     return;
   }
 
@@ -178,7 +177,9 @@ function onSearch(e) {
 }
 
 const renderMarkup =
-  photos => `<a class="gallery__item-catalog gallery__item--catalog-main" href="${photos.src.original}">
+  photos => `<a class="gallery__item-catalog gallery__item--catalog-main" href="${
+    photos.src.original
+  }">
   <div class="gallery__thumb-img">
     <img
       class="gallery__image"
@@ -187,7 +188,7 @@ const renderMarkup =
     />
     </div>
     <div class="gallery__content-img">
-  <h4 class="gallery-item__title-catalog">${photos.alt}</h4>
+  <h4 class="gallery-item__title-catalog">${photos.alt.slice(0, 66)}</h4>
   </div>`;
 
 const renderMainPageMarkup =
