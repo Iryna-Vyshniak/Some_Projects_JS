@@ -29,12 +29,20 @@
           >
             <form action="submit" class="catalog-form" id="catalog-form">
               <input
+                list="search-options"
                 type="text"
                 name="query"
                 id="catalog-search"
                 class="catalog-header__input search"
-                placeholder="Search images..."
+                placeholder="Search..."
               />
+              <datalist id="search-options">
+                <option value="Ukraine"></option>
+                <option value="Freedom"></option>
+                <option value="Happy Childhood"></option>
+                <option value="Sunset"></option>
+                <option value="Be Happy"></option>
+              </datalist>
               <button type="submit" id="catalog-search" class="search">
                 <i class="fa-solid fa-magnifying-glass search"></i>
               </button>
