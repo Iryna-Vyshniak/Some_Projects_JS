@@ -12,13 +12,15 @@ const searchWrapper = document.querySelector(
 );
 const form = document.querySelector('#catalog-form');
 const searchInput = document.querySelector('#catalog-search');
+// const alertPopup = document.querySelector('.alert');
+// let isAlertVisible = false;
 //const loadMoreBtn = document.querySelector('.js-gallery__load-btn');
 
 const API_KEY = 'nK8dQ9g0n9ztLpNfMUyyoRWjFaSsbPf5sCCcMrST8otmYHlyeXOtDq1p';
 
 // search input is hidden or focused
 document.addEventListener('click', e => {
-  console.log(e.target.className.indexOf('search'));
+  // console.log(e.target.className.indexOf('search'));
   if (e.target.className.indexOf('search')) {
     searchWrapper.classList.add('focused');
     //searchInput.focus();
@@ -59,6 +61,8 @@ class PhotosApiService {
   constructor() {
     this.query = '';
     this.page = 1;
+    this.perPage = 20;
+    // this.totalPages = 100 / this.perPage;
   }
 
   fetchPhotosGallery() {
@@ -66,26 +70,28 @@ class PhotosApiService {
     const client = createClient(API_KEY);
 
     return client.photos
-      .search({ query: this.query, per_page: 20, page: this.page })
-      .then(({ photos }) => {
-        if (!photos.length) {
+      .search({ query: this.query, per_page: this.perPage, page: this.page })
+      .then(data => {
+        if (!data.photos.length) {
           loadMoreBtn.hide();
           Report.failure(
             '🥺 Ooops...',
-            'Your request isn`t clear, please, try again',
+            `We don't find any photos by "${this.query.toUpperCase()}" 🥺`,
             'Okay',
             reportOptions
           );
         }
+
         this.incrementPage();
 
-        return photos; //data.photos
+        return data;
       });
   }
 
   get searchQuery() {
     return this.query;
   }
+
   set searchQuery(newQuery) {
     this.query = newQuery;
   }
@@ -106,10 +112,10 @@ function onSearch(e) {
 
   //clearGalleryContainer(); // => here clear or in .then
 
-  photosApiService.query = e.target.elements.query.value;
+  const query = e.target.elements.query.value;
   //console.log(photosApiService.query);
 
-  if (!photosApiService.query) {
+  if (!query) {
     Report.info(
       'What`re we looking for?',
       'Please, enter what do you want to search 😉',
@@ -119,10 +125,25 @@ function onSearch(e) {
     searchInput.placeholder = 'What`re we looking for?';
     return;
   }
+
+  if (photosApiService.query === query) {
+    Report.info(
+      'Ooops...',
+      'Already show! Please, enter another phrase😉',
+      'Okay',
+      reportOptions
+    );
+    return;
+  }
+
+  photosApiService.query = query;
+
   //searchInput.blur();
   loadMoreBtn.show();
   photosApiService.resetPage(); // reset page every time when submit form
+  clearGalleryContainer();
   fetchPhotos();
+  // console.log(data.photos.length, data.per_page);
 }
 
 const renderMarkup =
@@ -153,15 +174,19 @@ const clearGalleryContainer = () => (galleryContainer.innerHTML = '');
 
 function fetchPhotos() {
   loadMoreBtn.disable();
+
   photosApiService
     .fetchPhotosGallery()
-    .then(photos => {
-      //  console.log(photos);
-      clearGalleryContainer();
+    .then(({ photos, per_page }) => {
       insertContent(photos);
-
       gallery.refresh();
+
       loadMoreBtn.enable();
+
+      // console.log(photos.length, page, per_page, total_results);
+      if (photos.length < per_page) {
+        loadMoreBtn.hide();
+      }
     })
     .catch(err => {
       loadMoreBtn.hide();
@@ -172,6 +197,20 @@ function fetchPhotos() {
         reportOptions
       );
     });
+}
+
+// ! ---------- ALERT ---------------------------
+
+function toggleAlertPopup() {
+  if (isAlertVisible) {
+    return;
+  }
+  isAlertVisible = true;
+  alertPopup.classList.add('is-visible');
+  setTimeout(() => {
+    alertPopup.classList.remove('is-visible');
+    isAlertVisible = false;
+  }, 3000);
 }
 
 // !---- LOADING----------------------------------------
