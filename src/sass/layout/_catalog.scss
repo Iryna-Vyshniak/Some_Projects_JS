@@ -156,6 +156,11 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @include pre-mobile {
+        width: 450px;
+        height: 380px;
+    }
 }
 
 .gallery > a ~ * img {
@@ -166,21 +171,23 @@ img {
 }
 
 .gallery {
-    display: block;
-    margin: 0 auto;
-    margin-bottom: .725rem;
-    width: 350px;
-    height: 380px;
-
-    @media screen and (min-width: 768px) {
-        display: grid;
-        grid-gap: 10px;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        grid-auto-rows: 280px;
-        grid-auto-flow: dense;
-        width: 100%;
-        height: 100%;
+    @include pre-mobile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        width: 80%;
     }
+
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-auto-rows: 280px;
+    grid-auto-flow: dense;
+    width: 80%;
+    height: 100%;
+
 }
 
 .gallery__item-catalog:nth-child(2) {
@@ -217,7 +224,7 @@ img {
     transition: all 250ms ease-in-out;
     margin-bottom: .725rem;
 
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 479.99px) {
         margin: 0;
     }
 }
