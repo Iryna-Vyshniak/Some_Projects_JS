@@ -3,9 +3,13 @@ const dateEl = document.querySelector('.date');
 const monthsEl = document.querySelector('.date-month');
 const yearEl = document.querySelector('.date-year');
 const digitalClock = document.querySelector('.digital-clock');
-const arrowHours = document.querySelector('#hours__arrow');
-const arrowMinutes = document.querySelector('#minutes__arrow');
-const arrowSeconds = document.querySelector('#seconds__arrow');
+// const arrowHours = document.querySelector('#hours__arrow');
+// const arrowMinutes = document.querySelector('#minutes__arrow');
+// const arrowSeconds = document.querySelector('#seconds__arrow');
+
+const arrowSeconds = document.querySelector('.sec');
+const arrowMinutes = document.querySelector('.min');
+const arrowHours = document.querySelector('.hr');
 
 const namesOfDay = [
   'Неділя',
