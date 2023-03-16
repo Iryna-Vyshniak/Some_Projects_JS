@@ -138,14 +138,15 @@ class PhotosApiService {
   }
 }
 
+// ! ---------------INITIALIZATION ---------------------------------------------
 const photosApiService = new PhotosApiService();
 const photosApiServiceMainPage = new PhotosApiService();
 
+// ! --------------- MAIN PAGE ------------------------------------------------
 photosApiServiceMainPage
   .fetchPhotosMainPage()
   .then(({ photos }) => {
     insertContent(photos, renderMainPageMarkup);
-    onScroll();
     simpleLightbox.refresh();
     loadMoreBtn.hide();
   })
@@ -153,6 +154,7 @@ photosApiServiceMainPage
     console.log(err);
   });
 
+// !------ SUBMIT --------------------------------------
 function onSearch(e) {
   e.preventDefault();
 
@@ -188,9 +190,11 @@ function onSearch(e) {
   photosApiService.resetPage(); // reset page every time when submit form
   clearGalleryContainer();
   fetchPhotos();
-
+  onScroll();
   // console.log(data.photos.length, data.per_page);
 }
+
+// ! ----------- RENDER -------------------------------------------------
 
 const renderMarkup =
   photos => `<a class="gallery__item-catalog gallery__item--catalog-main" href="${
@@ -251,7 +255,7 @@ function fetchPhotos() {
       gallery.refresh();
 
       loadMoreBtn.enable();
-      onScroll();
+
       // console.log(photos.length, page, per_page, total_results);
       if (photos.length < per_page) {
         loadMoreBtn.hide();
