@@ -29,6 +29,7 @@
     "pexels": "^1.4.0",
     "simplelightbox": "^2.12.1",
     "toastr": "^2.1.4",
+    "tui-pagination": "^3.4.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
