@@ -1,6 +1,11 @@
-const gallery = document.querySelector('#pagination-gallery');
+import Pagination from 'tui-pagination';
+import 'tui-pagination/dist/tui-pagination.css';
+import { Report } from 'notiflix/build/notiflix-report-aio';
 
-let page = 1;
+const gallery = document.querySelector('#pagination-gallery');
+const container = document.querySelector('#pagination');
+
+const PER_PAGE = 20;
 
 function rickandmortyAPI(page = 1) {
   return fetch(`https://rickandmortyapi.com/api/character/?page=${page}`).then(
@@ -13,53 +18,128 @@ function rickandmortyAPI(page = 1) {
   );
 }
 
-//! ---------------------  -----------------------------------------------
+// !---- PAGINATION ----------------------------
 
-// для плавного прокручування сторінки після запиту і відтворення кожної наступної групи зображень
-// document.addEventListener('scroll', onScroll);
+const paginationOptions = {
+  totalItems: 10,
+  itemsPerPage: PER_PAGE, // per_page in fetch
+  visiblePages: 7,
+  page: 1,
+  centerAlign: true,
+  firstItemClassName: 'tui-first-child',
+  lastItemClassName: 'tui-last-child',
+  usageStatistics: false,
+  template: {
+    page: '<a href="#" class="tui-page-btn">{{page}}</a>',
+    currentPage:
+      '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
+    moveButton:
+      '<a href="#" class="tui-page-btn tui-{{type}}">' +
+      '<span class="tui-ico-{{type}}">{{type}}</span>' +
+      '</a>',
+    disabledMoveButton:
+      '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
+      '<span class="tui-ico-{{type}}">{{type}}</span>' +
+      '</span>',
+    moreButton:
+      '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
+      '<span class="tui-ico-ellip">...</span>' +
+      '</a>',
+  },
+};
 
-// function onScroll() {
-//   const { height: cardHeight } = document
-//     .querySelector('.js-list')
-//     .firstElementChild.getBoundingClientRect();
+const paginOptionsLess = {
+  totalItems: 0,
+  itemsPerPage: 20,
+  visiblePages: 3,
+  page: 1,
+  centerAlign: true,
+  firstItemClassName: 'tui-first-child',
+  lastItemClassName: 'tui-last-child',
+  usageStatistics: false,
+  template: {
+    page: '<a href="#" class="tui-page-btn">{{page}}</a>',
+    currentPage:
+      '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
+    moveButton:
+      '<a href="#" class="tui-page-btn tui-{{type}}">' +
+      '<span class="tui-ico-{{type}}">{{type}}</span>' +
+      '</a>',
+    disabledMoveButton:
+      '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
+      '<span class="tui-ico-{{type}}">{{type}}</span>' +
+      '</span>',
+    moreButton:
+      '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
+      '<span class="tui-ico-ellip">...</span>' +
+      '</a>',
+  },
+};
 
-//   window.scrollBy({
-//     top: cardHeight * 2,
-//     behavior: 'smooth',
-//   });
-// }
+let options = null;
 
-rickandmorty();
+if (window.screen.width <= 480) {
+  options = paginOptionsLess;
+} else {
+  options = paginationOptions;
+}
 
-function rickandmorty() {
-  return rickandmortyAPI()
-    .then(({ info: { pages }, results }) => {
-      console.log('сторінка: ', page, 'всього сторінок: ', pages);
+const pagination = new Pagination(container, options);
+const page = pagination.getCurrentPage();
+console.log(page);
 
+pagination.on('afterMove', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+//! --------------------- FETCH API ---------------
+
+rickandmortyAPI(page)
+  .then(({ info: { count }, results }) => {
+    console.log(
+      'сторінка: ',
+      page,
+      'всього зображень: ',
+      count,
+      'results: ',
+      results
+    );
+    if (!results.length) {
+      Report.failure(
+        '🥺 Ooops...',
+        `We don't find any cards with heroes" 🥺`,
+        'Okay'
+      );
+    }
+    pagination.reset(count);
+    createMarkup(results);
+  })
+  .catch(err => console.log(err));
+
+// !---- PAGINATION ----------------------------
+
+pagination.on('afterMove', loadMoreCards); // on => likes on addEventListener
+
+function loadMoreCards(e) {
+  const currentPage = e.page;
+  console.log(currentPage);
+  rickandmortyAPI(currentPage)
+    .then(({ results }) => {
       createMarkup(results);
-      //load.hidden = false;
-      // onScroll(); //плавне прокручування сторінки після запиту і відтворення кожної наступної групи зображень
     })
     .catch(err => console.log(err));
 }
 
+// !------------ CREATE MARKUP ---------------------
 function createMarkup(arr) {
   const markup = arr
     .map(
-      ({
-        name,
-        image,
-        species,
-        gender,
-        location: { name: location },
-      }) => `<li class="wrapper">
+      ({ name, image, species }) => `<li class="wrapper">
     <div class="img-area">
       <div class="inner-area">
         <img src="${image}" alt="${name}">
       </div>
     </div>
-    <div class="icon arrow"><i class="fas fa-arrow-left"></i></div>
-    <div class="icon dots"><i class="fas fa-ellipsis-v"></i></div>
     <div class="name">${name}</div>
     <div class="about">${species}</div>
     <div class="social-icons">
@@ -91,32 +171,7 @@ function createMarkup(arr) {
         </li>`
     )
     .join('');
-  gallery.insertAdjacentHTML('beforeend', markup);
-}
-
-function onLoad() {
-  nextPage();
-  return rickandmortyAPI()
-    .then(({ info: { pages }, results }) => {
-      // data
-      console.log('сторінка: ', page, 'всього сторінок: ', pages);
-
-      if (pages === page) {
-        // load.hidden = true;
-        return;
-      }
-      createMarkup(results);
-      //   onScroll(); //плавне прокручування сторінки після запиту і відтворення кожної наступної групи зображень
-    })
-    .catch(err => console.log(err));
-}
-
-function clearGallery() {
-  gallery.innerHTML = '';
-}
-
-function nextPage() {
-  page += 1;
+  gallery.innerHTML = markup;
 }
 
 const randomNumber = max => {
