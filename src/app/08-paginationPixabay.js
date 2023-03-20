@@ -83,7 +83,28 @@ if (window.screen.width <= 480) {
 
 const pagination = new Pagination(container, options);
 const page = pagination.getCurrentPage();
-console.log(page);
+// console.log(page);
+
+const loadMoreMainVideos = e => {
+  console.log(e);
+  const currentPage = e.page;
+  pixabayApiService
+    .fetchVideosForMainPage(currentPage)
+    .then(({ hits }) => {
+      insertGalleryContent(hits, createMarkupForMainPage);
+      refreshFsLightbox();
+    })
+    .catch(err =>
+      Notify.failure(
+        `Sorry, there are no videos ${pixabayApiService.query.toUpperCase()} matching your search. Please try again.`
+      )
+    );
+};
+
+pagination.on('beforeMove', e => {
+  loadMoreMainVideos(e);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 
 pagination.on('afterMove', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -97,23 +118,25 @@ const URL_BASE = `https://pixabay.com/api/videos/`;
 class PixabayApiService {
   constructor() {
     this.searchQuery = '';
-    this.page = 1;
     this.per_page = 40;
+    this.totalPhotos = 0;
   }
 
-  fetchVideos() {
-    const url = `${URL_BASE}?key=${API_KEY}&q=${this.searchQuery}&video_type=all&safesearch=true&min_width=350&min_height=250&page=${this.page}&per_page=${this.per_page}`;
+  fetchVideos(page) {
+    const url = `${URL_BASE}?key=${API_KEY}&q=${this.searchQuery}&video_type=all&safesearch=true&min_width=350&min_height=250&page=${page}&per_page=${this.per_page}`;
 
     return fetch(url)
       .then(response => response.json())
       .then(data => {
-        this.nextPage();
+        console.log(data);
+        // this.nextPage();
         return data;
       });
   }
 
-  fetchVideosForMainPage() {
-    const url = `${URL_BASE}?key=${API_KEY}&q=sea&video_type=all&safesearch=true&min_width=350&min_height=250`;
+  fetchVideosForMainPage(page) {
+    // page get from library pagination
+    const url = `${URL_BASE}?key=${API_KEY}&q=sea&video_type=all&safesearch=true&min_width=350&min_height=250&page=${page}&per_page=${this.per_page}`;
 
     return fetch(url)
       .then(response => response.json())
@@ -122,13 +145,13 @@ class PixabayApiService {
       });
   }
 
-  nextPage() {
-    this.page += 1;
-  }
+  //   nextPage() {
+  //     this.page += 1;
+  //   }
 
-  resetPage() {
-    this.page = 1;
-  }
+  //   resetPage() {
+  //     this.page = 1;
+  //   }
 
   get query() {
     return this.searchQuery;
@@ -136,6 +159,14 @@ class PixabayApiService {
 
   set query(newQuery) {
     this.searchQuery = newQuery;
+  }
+
+  setTotal(newTotal) {
+    this.totalPhotos = newTotal;
+  }
+
+  hasMoreVideos() {
+    return page < Math.ceil(this.totalPhotos / this.per_page);
   }
 }
 
@@ -147,10 +178,12 @@ const pixabayApiService = new PixabayApiService();
 
 // functions
 fetchVideosForMainPage();
+
 function fetchVideosForMainPage() {
   pixabayApiService
-    .fetchVideosForMainPage()
-    .then(({ hits }) => {
+    .fetchVideosForMainPage(page)
+    .then(({ hits, total }) => {
+      pagination.reset(total);
       insertGalleryContent(hits, createMarkupForMainPage);
       refreshFsLightbox();
     })
@@ -181,15 +214,15 @@ function onSearch(e) {
 
   pixabayApiService.query = value;
 
-  pixabayApiService.resetPage();
+  //pixabayApiService.resetPage();
   clearGalleryContainer();
   fetchVideos();
 }
 
 function fetchVideos() {
   pixabayApiService
-    .fetchVideos()
-    .then(({ hits, totalHits }) => {
+    .fetchVideos(page)
+    .then(({ hits, totalHits, total }) => {
       if (!hits) {
         Notify.failure(
           `Sorry, there are no videos ${pixabayApiService.query.toUpperCase()} matching your search. Please try again.`
@@ -202,6 +235,7 @@ function fetchVideos() {
         );
         return;
       }
+      pagination.reset(total);
       Notify.success(`Hooray! We found ${totalHits} videos.`);
       insertGalleryContent(hits, createMarkup);
       galleryLightbox.refresh();
@@ -287,7 +321,7 @@ const generateGalleryContent = (array, markup) =>
 
 const insertGalleryContent = (array, markup) => {
   const result = generateGalleryContent(array, markup);
-  gallery.insertAdjacentHTML('beforeend', result);
+  gallery.innerHTML = result;
 };
 
 function clearGalleryContainer() {
