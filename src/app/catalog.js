@@ -62,6 +62,7 @@ const gallery = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
   scrollZoom: false,
 });
+
 const simpleLightbox = new SimpleLightbox('.gallery a', {
   closeText: 'x',
   captionsData: 'alt',
@@ -190,8 +191,6 @@ function onSearch(e) {
   photosApiService.resetPage(); // reset page every time when submit form
   clearGalleryContainer();
   fetchPhotos();
-  // ..
-  // console.log(data.photos.length, data.per_page);
 }
 
 // ! ----------- RENDER -------------------------------------------------
