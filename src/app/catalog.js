@@ -19,18 +19,18 @@ const searchInput = document.querySelector('#catalog-search');
 const API_KEY = 'nK8dQ9g0n9ztLpNfMUyyoRWjFaSsbPf5sCCcMrST8otmYHlyeXOtDq1p';
 
 //  для плавного прокручування сторінки після запиту і відтворення кожної наступної групи зображень
-document.addEventListener('scroll', onScroll);
+// document.addEventListener('scroll', onScroll);
 
-function onScroll() {
-  const { height: cardHeight } = document
-    .querySelector('.gallery')
-    .firstElementChild.getBoundingClientRect();
+// function onScroll() {
+//   const { height: cardHeight } = document
+//     .querySelector('.gallery')
+//     .firstElementChild.getBoundingClientRect();
 
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: 'smooth',
-  });
-}
+//   window.scrollBy({
+//     top: cardHeight * 2,
+//     behavior: 'smooth',
+//   });
+// }
 
 // search input is hidden or focused
 document.addEventListener('click', e => {
@@ -190,7 +190,7 @@ function onSearch(e) {
   photosApiService.resetPage(); // reset page every time when submit form
   clearGalleryContainer();
   fetchPhotos();
-  onScroll();
+  // ..
   // console.log(data.photos.length, data.per_page);
 }
 
