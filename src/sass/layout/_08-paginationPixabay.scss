@@ -1,0 +1,228 @@
+.container-pixabay {
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+
+    @media screen and (min-width: 30rem) {
+        max-width: 34.375rem;
+    }
+
+    @include tablet {
+        max-width: 64rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    @include desktop {
+        width: 100%;
+        max-width: 80rem;
+    }
+}
+
+.header-pixabay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    width: 100vw;
+    height: 65px;
+    background: radial-gradient(circle 38.125rem at 5.2% 51.6%, rgb(235, 215, 251) 0%, rgb(225, 225, 255) 97.5%) no-repeat fixed;
+}
+
+.header-pixabay-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.search-form-pixabay {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+.search-form-input-pixabay {
+    flex-grow: 1;
+    padding: 5px 15px;
+    max-width: 600px;
+    width: 20rem;
+    height: 2.75rem;
+
+    border: none;
+    outline: none;
+    border-radius: 8px;
+
+    box-shadow: -0.1875rem -0.1875rem .4375rem #ffffff73,
+        .1875rem .1875rem .3125rem rgba(94, 104, 121, 0.288);
+
+    background-color: transparent;
+
+    color: #AE1100;
+    text-shadow: .0625rem .0625rem .0625rem #fff;
+
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 1.2px;
+    transition: all 0.2s ease-in-out;
+
+
+    &:hover,
+    &:focus,
+    &:active {
+        background: #ecf0f3;
+        box-shadow: inset -3px -3px 7px #ffffff,
+            inset 3px 3px 5px #ceced1;
+    }
+}
+
+.search-form-btn-pixabay {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    padding: 10px 20px;
+    max-width: 20rem;
+    height: 2.75rem;
+
+    border: 0;
+    outline: 0;
+    border-radius: .3125rem;
+    box-shadow: -0.1875rem -0.1875rem .4375rem #ffffff73,
+        .1875rem .1875rem .3125rem rgba(94, 104, 121, 0.288);
+    cursor: pointer;
+
+    background-color: transparent;
+    color: #AE1100;
+    text-shadow: .0625rem .0625rem .0625rem #fff;
+    text-transform: capitalize;
+    font-weight: 600;
+
+    transition: all 0.2s ease-in-out;
+
+    &:hover,
+    &:focus,
+    &:active {
+        box-shadow: inset .0625rem .0625rem .125rem #babecc, inset -0.0625rem -0.0625rem .125rem #fff;
+    }
+}
+
+
+
+.search-pixabay {
+    margin-right: 10px;
+    fill: #AE1100;
+}
+
+
+.gallery-pixabay {
+    padding-top: 40px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.photo-gallery-pixabay.container-pixabay {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 25px;
+}
+
+
+
+.card-link-pixabay {
+    width: 100%;
+    flex-basis: calc((100% - 3.75rem) / 4);
+
+    box-shadow: .625rem .625rem 1.125rem -0.75rem rgb(115, 120, 175);
+    background: radial-gradient(circle 38.125rem at 5.2% 51.6%, rgba(247, 237, 255, 0.625) 0%, rgba(237, 237, 255, 0.668) 97.5%) no-repeat fixed;
+
+    transition: transform 250ms linear;
+
+    &:hover,
+    &:focus {
+        transform: scale(1.05);
+    }
+
+}
+
+.photo-card-pixabay {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: space-evenly;
+}
+
+.photo-pixabay {
+    display: block;
+    width: 100%;
+
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.info-pixabay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+
+    width: 100%;
+
+    font-size: 13px;
+
+    background: radial-gradient(circle 38.125rem at 5.2% 51.6%, rgba(245, 237, 251, 0.767) 0%, rgba(238, 238, 253, 0.699) 97.5%) no-repeat fixed;
+}
+
+.info-item-pixabay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background-color: transparent;
+
+    color: #8e8cc0;
+    text-shadow: .0625rem .0625rem .0625rem #FFF;
+
+
+    @media screen and (min-width: 30rem) {
+        font-size: 12px;
+    }
+
+    @include tablet {
+        font-size: 14px;
+    }
+
+    @include desktop {
+        font-size: 12px;
+    }
+}
+
+
+
+.is-hidden {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.load-more-pixabay {
+    display: block;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px;
+    padding: 10px;
+}
+
+ul {
+    list-style-type: none;
+}
