@@ -1,16 +1,95 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import Pagination from 'tui-pagination';
+import 'tui-pagination/dist/tui-pagination.css';
 import FsLightbox from 'fslightbox';
 
 const form = document.querySelector('#search-form-pixabay');
 const gallery = document.querySelector('.gallery-pixabay');
+const container = document.querySelector('#pagination');
 
 const galleryLightbox = new SimpleLightbox('.gallery-pixabay a', {
   captionsData: 'alt',
   captionPosition: 'bottom',
   captionDelay: 250,
 });
+
+// !---- PAGINATION ----------------------------
+
+const paginationOptions = {
+  totalItems: 10,
+  itemsPerPage: 40, // per_page in fetch
+  visiblePages: 7,
+  page: 1,
+  centerAlign: true,
+  firstItemClassName: 'tui-first-child',
+  lastItemClassName: 'tui-last-child',
+  usageStatistics: false,
+  template: {
+    page: '<a href="#" class="tui-page-btn">{{page}}</a>',
+    currentPage:
+      '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
+    moveButton:
+      '<a href="#" class="tui-page-btn tui-{{type}}">' +
+      '<span class="tui-ico-{{type}}">{{type}}</span>' +
+      '</a>',
+    disabledMoveButton:
+      '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
+      '<span class="tui-ico-{{type}}">{{type}}</span>' +
+      '</span>',
+    moreButton:
+      '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
+      '<span class="tui-ico-ellip">...</span>' +
+      '</a>',
+  },
+};
+
+const paginOptionsLess = {
+  totalItems: 0,
+  itemsPerPage: 40,
+  visiblePages: 3,
+  page: 1,
+  centerAlign: true,
+  firstItemClassName: 'tui-first-child',
+  lastItemClassName: 'tui-last-child',
+  usageStatistics: false,
+  template: {
+    page: '<a href="#" class="tui-page-btn">{{page}}</a>',
+    currentPage:
+      '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
+    moveButton:
+      '<a href="#" class="tui-page-btn tui-{{type}}">' +
+      '<span class="tui-ico-{{type}}">{{type}}</span>' +
+      '</a>',
+    disabledMoveButton:
+      '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
+      '<span class="tui-ico-{{type}}">{{type}}</span>' +
+      '</span>',
+    moreButton:
+      '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
+      '<span class="tui-ico-ellip">...</span>' +
+      '</a>',
+  },
+};
+
+let options = null;
+
+if (window.screen.width <= 480) {
+  options = paginOptionsLess;
+} else {
+  options = paginationOptions;
+}
+
+const pagination = new Pagination(container, options);
+const page = pagination.getCurrentPage();
+console.log(page);
+
+pagination.on('afterMove', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ! CLASS for fetching
 
 const API_KEY = `31807815-f192f6f9aa73198d509365ba4`;
 const URL_BASE = `https://pixabay.com/api/videos/`;
