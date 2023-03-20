@@ -96,14 +96,6 @@ pagination.on('afterMove', () => {
 
 rickandmortyAPI(page)
   .then(({ info: { count }, results }) => {
-    console.log(
-      'сторінка: ',
-      page,
-      'всього зображень: ',
-      count,
-      'results: ',
-      results
-    );
     if (!results.length) {
       Report.failure(
         '🥺 Ooops...',
@@ -143,7 +135,7 @@ function createMarkup(arr) {
     <div class="name">${name}</div>
     <div class="about">${species}</div>
     <div class="social-icons">
-      <a href="#" class="fb"><i class="fab fa-facebook-f"></i></a>
+     <a href="#" class="fb"><i class="fab fa-facebook-f"></i></a>
       <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
       <a href="#" class="insta"><i class="fab fa-instagram"></i></a>
       <a href="#" class="yt"><i class="fab fa-youtube"></i></a>
@@ -154,7 +146,7 @@ function createMarkup(arr) {
     </div>
     <div class="social-share">
       <div class="row">
-        <i class="far fa-heart"></i>
+         <i class="far fa-heart"></i>
         <i class="icon-2 fas fa-heart"></i>
         <span>${randomNumber(1000)}</span>
       </div>
