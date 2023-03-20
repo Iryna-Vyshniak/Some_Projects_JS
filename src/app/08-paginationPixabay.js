@@ -1,4 +1,4 @@
-// import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import FsLightbox from 'fslightbox';
@@ -22,7 +22,7 @@ class PixabayApiService {
     this.per_page = 40;
   }
 
-  fetchImages() {
+  fetchVideos() {
     const url = `${URL_BASE}?key=${API_KEY}&q=${this.searchQuery}&video_type=all&safesearch=true&min_width=350&min_height=250&page=${this.page}&per_page=${this.per_page}`;
 
     return fetch(url)
@@ -33,13 +33,12 @@ class PixabayApiService {
       });
   }
 
-  fetchImagesForMainPage() {
+  fetchVideosForMainPage() {
     const url = `${URL_BASE}?key=${API_KEY}&q=sea&video_type=all&safesearch=true&min_width=350&min_height=250`;
 
     return fetch(url)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         return data;
       });
   }
@@ -68,15 +67,19 @@ form.addEventListener('submit', onSearch);
 const pixabayApiService = new PixabayApiService();
 
 // functions
-fetchImagesForMainPage();
-function fetchImagesForMainPage() {
+fetchVideosForMainPage();
+function fetchVideosForMainPage() {
   pixabayApiService
-    .fetchImagesForMainPage()
+    .fetchVideosForMainPage()
     .then(({ hits }) => {
-      insertGalleryContent(hits, createMarkupForVideo);
+      insertGalleryContent(hits, createMarkupForMainPage);
       refreshFsLightbox();
     })
-    .catch(err => console.log(err));
+    .catch(err =>
+      Notify.failure(
+        `Sorry, there are no videos ${pixabayApiService.query.toUpperCase()} matching your search. Please try again.`
+      )
+    );
 }
 
 function onSearch(e) {
@@ -85,37 +88,50 @@ function onSearch(e) {
   const value = e.currentTarget.searchQuery.value.trim().toLowerCase();
 
   if (value === '') {
-    return alert('Please, enter a phrase');
+    Notify.info('Please, enter what do you want to search 😉');
+    return;
   }
 
   if (value === pixabayApiService.query) {
-    return alert('Please, enter another phrase');
+    Notify.warning(
+      `We already found videos for "${value.toUpperCase()}.
+      Please, enter another phrase😉`
+    );
+    return;
   }
 
   pixabayApiService.query = value;
 
   pixabayApiService.resetPage();
   clearGalleryContainer();
-
-  fetchImages();
+  fetchVideos();
 }
 
-function fetchImages() {
+function fetchVideos() {
   pixabayApiService
-    .fetchImages()
-    .then(({ hits }) => {
+    .fetchVideos()
+    .then(({ hits, totalHits }) => {
       if (!hits) {
-        alert('Not found images more');
+        Notify.failure(
+          `Sorry, there are no videos ${pixabayApiService.query.toUpperCase()} matching your search. Please try again.`
+        );
         return;
       }
       if (hits.length === 0) {
-        alert('Not found images');
+        Notify.failure(
+          `Sorry, there are no videos ${pixabayApiService.query.toUpperCase()} matching your search. Please try again.`
+        );
         return;
       }
+      Notify.success(`Hooray! We found ${totalHits} videos.`);
       insertGalleryContent(hits, createMarkup);
       galleryLightbox.refresh();
     })
-    .catch(err => console.log(err));
+    .catch(err =>
+      Notify.failure(
+        `Sorry, there are no videos ${pixabayApiService.query.toUpperCase()} matching your search. Please try again.`
+      )
+    );
 }
 
 // markup
@@ -138,22 +154,23 @@ function createMarkup({
         </video>
         <div class="info-pixabay">
           <p class="info-item-pixabay">
-            <b>Likes</b> ${likes}
+            <b><i class="fa-regular fa-heart"></i></b> ${likes}
           </p>
           <p class="info-item-pixabay">
-            <b>Views</b> ${views}
+            <b><i class="fa-solid fa-magnifying-glass"></i></b> ${views}
           </p>
           <p class="info-item-pixabay">
-            <b>Comments</b> ${comments}
+            <b><i class="fa-regular fa-comment"></i></b> ${comments}
           </p>
           <p class="info-item-pixabay">
-            <b>Downloads</b> ${downloads}
+            <b><i class="fa-solid fa-cloud-arrow-down"></i></b> ${downloads}
           </p>
         </div>
       </div>
     </a>`;
 }
-function createMarkupForVideo({
+
+function createMarkupForMainPage({
   videos: {
     medium: { url: medium },
     small: { url: small },
@@ -172,16 +189,13 @@ function createMarkupForVideo({
         </video>
         <div class="info-pixabay">
           <p class="info-item-pixabay">
-            <b>Likes</b> ${likes}
+            <b><i class="fa-regular fa-heart"></i></b> ${likes}
           </p>
           <p class="info-item-pixabay">
-            <b>Views</b> ${views}
+            <b><i class="fa-regular fa-comment"></i></b> ${comments}
           </p>
           <p class="info-item-pixabay">
-            <b>Comments</b> ${comments}
-          </p>
-          <p class="info-item-pixabay">
-            <b>Downloads</b> ${downloads}
+            <b><i class="fa-solid fa-cloud-arrow-down"></i></b> ${downloads}
           </p>
         </div>
       </div>
