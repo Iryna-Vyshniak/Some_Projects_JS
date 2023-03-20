@@ -1,6 +1,4 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
 import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.css';
 import FsLightbox from 'fslightbox';
@@ -9,13 +7,7 @@ const form = document.querySelector('#search-form-pixabay');
 const gallery = document.querySelector('.gallery-pixabay');
 const container = document.querySelector('#pagination');
 
-const galleryLightbox = new SimpleLightbox('.gallery-pixabay a', {
-  captionsData: 'alt',
-  captionPosition: 'bottom',
-  captionDelay: 250,
-});
-
-// !---- PAGINATION ----------------------------
+// !---- PAGINATION OPTIONS ----------------------------
 
 const paginationOptions = {
   totalItems: 10,
@@ -75,40 +67,43 @@ const paginOptionsLess = {
 
 let options = null;
 
+//! ------ ADAPTIVE PAGINATION ----------------------------------
 if (window.screen.width <= 480) {
   options = paginOptionsLess;
 } else {
   options = paginationOptions;
 }
 
+//! --------- INITIALIZATION PAGINATION --------------------------------
 const pagination = new Pagination(container, options);
 const page = pagination.getCurrentPage();
 // console.log(page);
+//console.dir(pagination);
 
+//! ----------- EVENTS PAGINATION -----------------------
 const loadMoreMainVideos = e => {
-  console.log(e);
   const currentPage = e.page;
-  pixabayApiService
-    .fetchVideosForMainPage(currentPage)
-    .then(({ hits }) => {
-      insertGalleryContent(hits, createMarkupForMainPage);
-      refreshFsLightbox();
-    })
-    .catch(err =>
-      Notify.failure(
-        `Sorry, there are no videos ${pixabayApiService.query.toUpperCase()} matching your search. Please try again.`
-      )
-    );
+  pixabayApiService.fetchVideosForMainPage(currentPage).then(({ hits }) => {
+    insertGalleryContent(hits, createMarkupForMainPage);
+    refreshFsLightbox();
+  });
 };
 
-pagination.on('beforeMove', e => {
-  loadMoreMainVideos(e);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+//! ----------- EVENTS PAGINATION -----------------------
+const loadMoreVideosBySearchQuery = e => {
+  const currentPage = e.page;
+  pixabayApiService.fetchVideos(currentPage).then(({ hits }) => {
+    //console.log(page);
+    insertGalleryContent(hits, createMarkup);
+    refreshFsLightbox();
+  });
+};
 
 pagination.on('afterMove', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+
+pagination.on('beforeMove', loadMoreMainVideos);
 
 // ! CLASS for fetching
 
@@ -127,11 +122,7 @@ class PixabayApiService {
 
     return fetch(url)
       .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        // this.nextPage();
-        return data;
-      });
+      .then(data => data);
   }
 
   fetchVideosForMainPage(page) {
@@ -145,14 +136,6 @@ class PixabayApiService {
       });
   }
 
-  //   nextPage() {
-  //     this.page += 1;
-  //   }
-
-  //   resetPage() {
-  //     this.page = 1;
-  //   }
-
   get query() {
     return this.searchQuery;
   }
@@ -160,32 +143,35 @@ class PixabayApiService {
   set query(newQuery) {
     this.searchQuery = newQuery;
   }
-
-  setTotal(newTotal) {
-    this.totalPhotos = newTotal;
-  }
-
-  hasMoreVideos() {
-    return page < Math.ceil(this.totalPhotos / this.per_page);
-  }
 }
 
-// addEventListener
+//! addEventListener
 form.addEventListener('submit', onSearch);
 
-// examplers Class
+//! examplers Class
 const pixabayApiService = new PixabayApiService();
 
-// functions
+//! ------------- fetchVideosForMainPage -----------------------
 fetchVideosForMainPage();
 
 function fetchVideosForMainPage() {
   pixabayApiService
     .fetchVideosForMainPage(page)
     .then(({ hits, total }) => {
-      pagination.reset(total);
+      //   console.log('total', total);
+      //   pagination.reset(total); // розраховуємо сторінки
+
+      if (total < 500) {
+        pagination.reset(total);
+      } else if (total >= 500) {
+        let maxTotal = 499;
+        pagination.reset(maxTotal);
+      }
+
       insertGalleryContent(hits, createMarkupForMainPage);
       refreshFsLightbox();
+
+      container.classList.remove('is-hidden');
     })
     .catch(err =>
       Notify.failure(
@@ -194,6 +180,7 @@ function fetchVideosForMainPage() {
     );
 }
 
+//! --------------- SUBMIT -------------------------------------
 function onSearch(e) {
   e.preventDefault();
 
@@ -213,12 +200,11 @@ function onSearch(e) {
   }
 
   pixabayApiService.query = value;
-
-  //pixabayApiService.resetPage();
   clearGalleryContainer();
   fetchVideos();
 }
 
+//! -------------- FETCH VIDEOS --------------------------------
 function fetchVideos() {
   pixabayApiService
     .fetchVideos(page)
@@ -227,27 +213,49 @@ function fetchVideos() {
         Notify.failure(
           `Sorry, there are no videos ${pixabayApiService.query.toUpperCase()} matching your search. Please try again.`
         );
+        clearGalleryContainer();
         return;
       }
       if (hits.length === 0) {
         Notify.failure(
           `Sorry, there are no videos ${pixabayApiService.query.toUpperCase()} matching your search. Please try again.`
         );
+        clearGalleryContainer();
+        container.classList.add('is-hidden');
         return;
       }
-      pagination.reset(total);
+
+      pagination.off('beforeMove', loadMoreMainVideos);
+      // find method in prototype, off because repeat photos from main page: 1st page - car, 2nd - from main page
+
+      pagination.off('beforeMove', loadMoreVideosBySearchQuery);
+      // відписуємося від попередньої, щоб не дублювалися запити
+
+      pagination.on('beforeMove', loadMoreVideosBySearchQuery);
+
+      //   pagination.reset(total); // розраховуємо сторінки
+      if (total < 500) {
+        pagination.reset(total);
+      } else if (total >= 500) {
+        let maxTotal = 499;
+        pagination.reset(maxTotal);
+      }
+
       Notify.success(`Hooray! We found ${totalHits} videos.`);
       insertGalleryContent(hits, createMarkup);
-      galleryLightbox.refresh();
+      refreshFsLightbox();
+      container.classList.remove('is-hidden');
     })
-    .catch(err =>
+    .catch(err => {
       Notify.failure(
         `Sorry, there are no videos ${pixabayApiService.query.toUpperCase()} matching your search. Please try again.`
-      )
-    );
+      );
+      clearGalleryContainer();
+      container.classList.add('is-hidden');
+    });
 }
 
-// markup
+//! ------------ MARKUP ------------------------------------
 function createMarkup({
   videos: {
     medium: { url: medium },
