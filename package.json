@@ -21,6 +21,7 @@
     "@vimeo/player": "^2.18.0",
     "basiclightbox": "^5.0.4",
     "date-fns": "^2.29.3",
+    "fslightbox": "^3.4.1",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
     "modern-normalize": "^1.1.0",
