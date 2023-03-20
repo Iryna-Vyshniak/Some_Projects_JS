@@ -1,30 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>08-paginationPixaby</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=BioRhyme&family=Dancing+Script:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./sass/index.scss" />
-  </head>
-  <body>
 
-     <!-- HEADER -->
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>08-paginationPixaby</title>
+  <link rel="stylesheet" href="./sass/index.scss" />
+</head>
+
+<body>
+  <!-- HEADER -->
   <header class="header-pixabay">
     <div class="container-pixabay header-pixabay-container">
       <form class="search-form-pixabay" id="search-form-pixabay">
         <input class="search-form-input-pixabay" type="text" name="searchQuery" autocomplete="off"
-          placeholder = "Search images..." />
+          placeholder="Search videos..." />
         <button class="search-form-btn-pixabay" type="submit">
-             <i class="fa-solid fa-magnifying-glass search-pixabay"></i>
+          <i class="fa-solid fa-magnifying-glass search-pixabay"></i>
           Search
         </button>
       </form>
@@ -32,24 +25,22 @@
     </div>
   </header>
 
-  <div class="main-pixabay">
+  <main class="main-pixabay">
     <!-- GALLERY  -->
-    <section class="photo-gallery-pixabay container-pixabay">
+    <section class="video-gallery-pixabay container-pixabay">
       <!-- gallery -->
       <div class="gallery-pixabay">
         <!-- Картки зображень -->
       </div>
     </section>
-     <ul class="pagination-gallery" id="pagination-gallery"></ul>
-        <div id="pagination" class="tui-pagination"></div>
-  </div>
+    <ul class="pagination-gallery" id="pagination-gallery"></ul>
+    <div id="pagination" class="tui-pagination"></div>
+  </main>
 
 
 
-  <script
-      src="https://kit.fontawesome.com/bd3e78b64a.js"
-      crossorigin="anonymous"
-    ></script>
-    <script src="./app/08-paginationPixabay.js"></script>
-  </body>
+  <script src="https://kit.fontawesome.com/bd3e78b64a.js" crossorigin="anonymous" type="module"></script>
+  <script src="./app/08-paginationPixabay.js" type="module"></script>
+</body>
+
 </html>
