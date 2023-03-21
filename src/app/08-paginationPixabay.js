@@ -118,7 +118,7 @@ class PixabayApiService {
   }
 
   fetchVideos(page) {
-    const url = `${URL_BASE}?key=${API_KEY}&q=${this.searchQuery}&video_type=all&safesearch=true&min_width=350&min_height=250&page=${page}&per_page=${this.per_page}`;
+    const url = `${URL_BASE}?key=${API_KEY}&q=${this.searchQuery}&video_type=all&safesearch=true&min_width=450&min_height=350&page=${page}&per_page=${this.per_page}`;
 
     return fetch(url)
       .then(response => response.json())
@@ -127,7 +127,7 @@ class PixabayApiService {
 
   fetchVideosForMainPage(page) {
     // page get from library pagination
-    const url = `${URL_BASE}?key=${API_KEY}&q=sea&video_type=all&safesearch=true&min_width=350&min_height=250&page=${page}&per_page=${this.per_page}`;
+    const url = `${URL_BASE}?key=${API_KEY}&q=sea&video_type=all&safesearch=true&min_width=450&min_height=350&page=${page}&per_page=${this.per_page}`;
 
     return fetch(url)
       .then(response => response.json())
